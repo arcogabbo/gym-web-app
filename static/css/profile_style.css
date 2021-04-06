@@ -1,0 +1,15 @@
+body{
+	background-color: #222;
+	color:#fff;
+}
+
+.profile-picture{
+	border-radius: 50%;
+	width: 300px;
+	height: 300px;
+}
+
+#description-area{
+	width:360px;
+	height:55px;
+}

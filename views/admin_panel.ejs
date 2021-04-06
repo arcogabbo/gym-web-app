@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<title>Pannello admin di <%= user.name %> <%= user.surname %></title>
+	<link rel="stylesheet" href="/css/admin_panel.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/js/admin_panel_script.js" type="text/javascript"></script>
+</head>
+<body>
+	<h3>Benvenuto nel pannello amministrativo <%= user.name %> <%= user.surname %></h3>
+
+	<input id="certificates_btn" type="button" value="Gestisci abbonamenti">
+	<input id="lessons_btn" type="button" value="Gestisci lezioni">
+	<br>
+	<% if (to_accept) { %>
+	<h3>Ci sono degli utenti da accettare</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Id utente</th>
+				<th>Nome</th>
+				<th>Cognome</th>
+				<th>Accettazione</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for(var i in to_accept) { %>
+				<tr>
+					<% for (var j in to_accept[i]) { %>
+						<td><%= to_accept[i][j] %></td>
+					<% } %>
+					<td><input id="<%= to_accept[i].id %>_accept" class="accept-btn" type="button" value="Accetta"></td>
+				</tr>
+			<% } %>
+		</tbody>
+	</table>
+	<% } %>
+
+</body>
+</html>

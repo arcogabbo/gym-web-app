@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="/css/dashboard_style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/js/dashboard_script.js" type="text/javascript"></script>
+</head>
+<body>
+	<h2>Benvenuto nella dashboard <%= user.name %> <%= user.surname %></h2>
+	<h4>Sezione prenotazione lezioni</h4>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Giorno</th>
+				<th>Ora</th>
+				<th>Posti liberi</th>
+				<th>Id lezione</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% if (lessons) { %>
+				<% for (var i in lessons) { %>
+					<tr>
+						<% for (var j in lessons[i]) { %>
+							<td><%= lessons[i][j] %></td>
+						<% } %>
+						<td><input id="<%= lessons[i].id %>_book" class="book-btn" type="button" value="Prenotati"></td>
+						<td><input id="<%= lessons[i].id %>_remove" class="remove-btn" type="button" value="Libera prenotazione"></td>
+					</tr>
+				<% } %>
+				<% } %>
+		</tbody>
+	</table>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pannello lezioni</title>
+	<link rel="stylesheet" href="/css/admin_panel.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/js/admin_lessons_script.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="insert-lessons">
+		<h4>In questa sezione ci si prende l'impegno di rispettare la lezione
+		lo stesso giorno per un mese di fila. Ad esempio inserendo il prossimo lunedì in realtà inserirai le lezioni di lunedì all'ora inserita per un mese intero, in alternativa sotto puoi inserire una singola lezione manualmente o rimuovere una già presente.</h4>
+		<input id="book_assurance" type="datetime-local">
+		<input id="book_assurance_number" type="number" value="8" placeholder="Capienza massima">
+		<input id="book_assurance_btn" type="button" value="Crea lezioni">
+	</div>
+	<div class="insert-single-lesson">
+		<h4>In questa sezione puoi inserire una singola lezione della durata di 1 ora</h4>
+		<input id="book_single" type="datetime-local">
+		<input id="book_single_number" type="number" value="8" placeholder="Capienza massima">
+		<input id="book_single_btn" type="button" value="Crea lezioni">
+	</div>
+	<div class="view-lessons">
+		<h4>In questa lezione vedrai le lezioni già inserite e potrai rimuoverle singolarmente</h4>
+		<table>
+			<thead>
+				<tr>
+					<th>Giorno</th>
+					<th>Ora</th>
+					<th>Capienza</th>
+					<th>Id lezione</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if (lessons) { %>
+				<% for (var i in lessons) { %>
+					<tr>
+						<% for (var j in lessons[i]) { %>
+							<td><%= lessons[i][j] %></td>
+						<% } %>
+						<td><input id="<%= lessons[i].id %>_remove" class="remove-btn" type="button" value="Rimuovi"></td>
+					</tr>
+				<% } %>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
