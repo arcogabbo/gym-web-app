@@ -14,10 +14,12 @@ function accept(){
 
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

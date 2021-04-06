@@ -25,6 +25,7 @@ function login(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

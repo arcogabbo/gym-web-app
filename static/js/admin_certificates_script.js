@@ -21,9 +21,11 @@ function add_certificate(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
@@ -40,9 +42,11 @@ function add_subscription(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
@@ -57,9 +61,11 @@ function remove_certificates(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

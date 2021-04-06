@@ -4,7 +4,6 @@ const book=require('../models/book_model.js')
 module.exports={
 	create_book:async(req,res)=>{
 		const params=utility.get_parameters(req)
-		console.log(params)
 
 		//prima controllo se la lezione esiste
 		var l=await book.get_lesson_capacity(params.lesson_id)

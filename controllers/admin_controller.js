@@ -85,7 +85,6 @@ module.exports={
 	update_certificates:async(req,res)=>{
 		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
-		console.log(params)
 		//controllo se l'utente al quale si vuole inserire l'abbonamento abbia
 		//gia' il record sul db
 		var certificates=await admin.get_certificates()

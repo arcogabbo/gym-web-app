@@ -9,12 +9,15 @@ window.onload=()=>{
 		if(size>2.0){
 			//svuoto il file
 			$('#image-file').val('')
-			$('#settings-box').append("<h3>Il file non deve superare la grandezza di 2MB</h3>")
+			M.toast({html:"Il file non deve superare la grandezza di 2MB"})
 		}
 	})
 
 	//materialize update text inputs
   	M.textareaAutoResize($('#description-area'));
+
+  	//init text area counter
+  	$('textarea').characterCounter();
 }
 
 
@@ -29,9 +32,11 @@ function save_changes(){
 		data:form_data,
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		},
 	 	cache: false,
         contentType: false,
@@ -49,9 +54,11 @@ function save_des(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

@@ -10,8 +10,8 @@
 	<script src="/js/dashboard_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<h2 class="flow-text">Benvenuto nella dashboard <%= user.name %> <%= user.surname %></h2>
-	<h4 class="flow-text">Sezione prenotazione lezioni</h4>
+	<h2 class="flow-text container">Benvenuto nella dashboard <%= user.name %> <%= user.surname %></h2>
+	<h4 class="flow-text container">Sezione prenotazione lezioni</h4>
 
 	<% if (lessons) { %>
 	<div class="row container">
@@ -62,7 +62,7 @@
 	</table>
 	-->
 	
-	<div class="fixed-action-btn horizontal">
+	<div class="fixed-action-btn click-to-toggle horizontal">
 	  	<a class="btn-floating btn-large red">
 	    	<i class="large material-icons">mode_edit</i>
 	  	</a>

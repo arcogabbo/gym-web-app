@@ -21,10 +21,12 @@ function multiple_books(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
@@ -40,10 +42,12 @@ function single_book(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
@@ -58,10 +62,12 @@ function remove_lesson(){
 		},
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

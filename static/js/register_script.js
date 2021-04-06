@@ -23,6 +23,7 @@ function register(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }

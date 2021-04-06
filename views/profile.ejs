@@ -13,7 +13,7 @@
 	<h2 class="flow-text"><%= requested.name%> <%= requested.surname%></h2>
 	<% if (user.id == requested.id) { %>
 		<div id="settings-box" class="input-field">
-			<textarea id="description-area" class="materialize-textarea" maxlength="100" placeholder="Inserisci la descrizione (max 100 caratteri) e salva per confermare la modifica"><%= requested.description %></textarea>
+			<textarea id="description-area" class="materialize-textarea" data-length="100" placeholder="Inserisci la descrizione (max 100 caratteri) e salva per confermare la modifica"><%= requested.description %></textarea>
 			<label for="description-area">Descrizione:</label>
 		</div>
 		

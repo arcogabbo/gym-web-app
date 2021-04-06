@@ -4,7 +4,7 @@ window.onload=()=>{
 	$('.remove-btn').on('click',free_spot)
 
 	//init fixed-btn
-    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left'});
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left', hoverEnabled:false});
 }
 
 function book(){
@@ -19,10 +19,12 @@ function book(){
 
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
@@ -39,10 +41,12 @@ function free_spot(){
 
 		success:(res)=>{
 			console.log(res)
+			M.toast({html:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
 		}
 	})
 }
