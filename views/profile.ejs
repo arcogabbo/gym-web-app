@@ -3,6 +3,7 @@
 <head>
 	<title>Profilo di <%= requested.name%> <%= requested.surname%></title>
 	<link rel="stylesheet" href="/css/profile_style.css">
+	<link rel="stylesheet" href="/css/materialize.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/profile_script.js" type="text/javascript"></script>
 </head>
@@ -24,5 +25,7 @@
 	<% } else {%>
 		<span><%= requested.description %></span>
 	<% } %>
+
+	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>
 </html>
