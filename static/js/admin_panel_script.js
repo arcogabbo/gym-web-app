@@ -1,17 +1,5 @@
 window.onload=()=>{
 	$('.accept-btn').on('click',accept)
-
-	$('#certificates_btn').on('click',redirect_c)
-
-	$('#lessons_btn').on('click',redirect_l)
-}
-
-function redirect_c(){
-	window.open('/administrate/certificates','_self')
-}
-
-function redirect_l(){
-	window.open('/administrate/lessons','_self')
 }
 
 function accept(){

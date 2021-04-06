@@ -4,6 +4,9 @@ window.onload=()=>{
 	$('#subscription_btn').on('click',add_subscription)
 
 	$('.remove-btn').on('click',remove_certificates)
+
+	//update field di testo (materialize)
+	M.updateTextFields();
 }
 
 function add_certificate(){

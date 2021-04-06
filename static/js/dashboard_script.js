@@ -2,6 +2,9 @@ window.onload=()=>{
 	$('.book-btn').on('click',book)
 
 	$('.remove-btn').on('click',free_spot)
+
+	//init fixed-btn
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left'});
 }
 
 function book(){

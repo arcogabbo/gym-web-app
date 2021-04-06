@@ -12,6 +12,9 @@ window.onload=()=>{
 			$('#settings-box').append("<h3>Il file non deve superare la grandezza di 2MB</h3>")
 		}
 	})
+
+	//materialize update text inputs
+  	M.textareaAutoResize($('#description-area'));
 }
 
 

@@ -3,20 +3,14 @@ body{
 	color:#fff;
 }
 
-table{
-	margin:auto;
-	width:50vw;
-}
-
 td{
-	text-align: center;
 	color:black;
 }
 
-thead{
-	background-color: #453a80
+input{
+	color:#fff;
 }
 
-tbody{
-	background-color: #f2f2f2
+select{
+	display:block !important;
 }

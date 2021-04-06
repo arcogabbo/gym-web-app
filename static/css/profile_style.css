@@ -4,12 +4,15 @@ body{
 }
 
 .profile-picture{
-	border-radius: 50%;
 	width: 300px;
-	height: 300px;
+	height: 300px !important;
 }
 
 #description-area{
 	width:360px;
 	height:55px;
+}
+
+textarea,input{
+	color:#fff;
 }

@@ -4,6 +4,9 @@ window.onload=()=>{
 	$('#register_btn').on('click',()=>{
 		window.open('/register','_self')
 	})
+
+	//update field di testo (materialize)
+	M.updateTextFields();
 }
 
 

@@ -2,17 +2,29 @@
 <html lang="it">
 <head>
 	<title>Login to CrossFit Scarab</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/login_style.css">
 	<link rel="stylesheet" href="/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/login_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<h2>Benvenuto, fai il login</h2>
-	<input id="mail_field" type="text" placeholder="E-mail">
-	<input id="password_field" type="password" placeholder="Password">
-	<input id="login_btn" type="button" value="Login">
-	<input id="register_btn" type="button" value="Registrati subito">
+	<h2 class="flow-text">Benvenuto, fai il login</h2>
+	<div class="input-field">
+		<i class="material-icons prefix">account_circle</i>
+		<input id="mail_field" class="validate" type="text">
+		<label for="mail_field">E-mail</label>
+	</div>
+	<div class="input-field">
+		<i class="material-icons prefix">lock_outline</i>
+		<input id="password_field" class="validate" type="password">
+		<label for="password_field">Password</label>
+	</div>
+	<button id="login_btn" class="btn waves-effect waves-light">Login</button>
+	<br>
+	<br>
+	<button id="register_btn" class="btn waves-effect waves-light">Registrati subito</button>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

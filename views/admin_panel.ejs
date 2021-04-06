@@ -2,21 +2,17 @@
 <html lang="it">
 <head>
 	<title>Pannello admin di <%= user.name %> <%= user.surname %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/admin_panel.css">
 	<link rel="stylesheet" href="/css/materialize.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/admin_panel_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<h3>Benvenuto nel pannello amministrativo <%= user.name %> <%= user.surname %></h3>
+	<h4 class="flow-text">In questa sezione potrai accettare gli utenti nuovi</h4>
 
-	<input id="certificates_btn" type="button" value="Gestisci abbonamenti">
-	<input id="lessons_btn" type="button" value="Gestisci lezioni">
-	<br>
-	<% if (to_accept) { %>
-	<h3>Ci sono degli utenti da accettare</h3>
-	<table>
-		<thead>
+	<table class="centered striped">
+		<thead class="teal">
 			<tr>
 				<th>Id utente</th>
 				<th>Nome</th>
@@ -24,18 +20,19 @@
 				<th>Accettazione</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="grey lighten-1">
+			<% if (to_accept) { %>
 			<% for(var i in to_accept) { %>
 				<tr>
 					<% for (var j in to_accept[i]) { %>
 						<td><%= to_accept[i][j] %></td>
 					<% } %>
-					<td><input id="<%= to_accept[i].id %>_accept" class="accept-btn" type="button" value="Accetta"></td>
+					<td><button id="<%= to_accept[i].id %>_accept" class="accept-btn btn waves-effect waves-light">Accetta</button></td>
 				</tr>
+			<% } %>
 			<% } %>
 		</tbody>
 	</table>
-	<% } %>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

@@ -14,7 +14,7 @@ module.exports={
 	},
 
 	read_info_by_mail:async (mail)=>{
-		var query="SELECT users.*,descriptions.description FROM users INNER JOIN descriptions ON users.id=descriptions.user_id WHERE users.mail=? AND is_accepted=1"
+		var query="SELECT users.*,descriptions.description FROM users LEFT JOIN descriptions ON users.id=descriptions.user_id WHERE users.mail=? AND is_accepted=1"
 		var result=await db.query(query,[mail])
 		
 		if(result){
@@ -24,7 +24,7 @@ module.exports={
 	},
 
 	read_info_by_id:async(id)=>{
-		var query="SELECT users.*,descriptions.description FROM users INNER JOIN descriptions ON users.id=descriptions.user_id WHERE id=? AND is_accepted=1"
+		var query="SELECT users.*,descriptions.description FROM users LEFT JOIN descriptions ON users.id=descriptions.user_id WHERE id=? AND is_accepted=1"
 		var result=await db.query(query,[id])
 		
 		if(result){
@@ -108,7 +108,7 @@ module.exports={
 	},
 
 	get_lessons:async()=>{
-		var query="SELECT DATE_FORMAT(start_date, '%d-%m-%Y') AS date,DATE_FORMAT(start_date, '%H:%i') AS time, 8-n_books ,id FROM lessons WHERE start_date >= DATE_ADD(CURRENT_TIMESTAMP(),INTERVAL 20 MINUTE) ORDER BY start_date"
+		var query="SELECT DATE_FORMAT(start_date, '%d/%m') AS date,DATE_FORMAT(start_date, '%H:%i') AS time, capacity-n_books AS free_spots,id FROM lessons WHERE start_date >= DATE_ADD(CURRENT_TIMESTAMP(),INTERVAL 20 MINUTE) ORDER BY start_date"
 
 		var result=await db.query(query,[])
 

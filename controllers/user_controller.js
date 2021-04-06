@@ -18,7 +18,8 @@ module.exports={
 					mail:utente[0].mail,
 					name:utente[0].name,
 					surname:utente[0].surname,
-					is_accepted:utente[0].is_accepted
+					is_accepted:utente[0].is_accepted,
+					is_admin:utente[0].is_admin
 				}
 				//questa funzione si occuperà anche di mandare la risposta
 				utility.jwt_sign(res,token_data)
@@ -139,7 +140,7 @@ module.exports={
 			flag=utility.delete_pic_by_path(file_info)
 		
 		//prendo l'id dalla sessione
-		let utente=await user.read_by_id(req.user.id)
+		let utente=await user.read_info_by_id(req.user.id)
 		
 		if(req.files){
 			//console.log(req.files)

@@ -4,6 +4,9 @@ window.onload=()=>{
 	$('#book_single_btn').on('click',single_book)
 
 	$('.remove-btn').on('click',remove_lesson)
+
+	//update field di testo (materialize)
+	M.updateTextFields();
 }
 
 

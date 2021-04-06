@@ -1,5 +1,8 @@
 window.onload=()=>{
 	$('#register_btn').on('click',register)
+
+	//update field di testo (materialize)
+	M.updateTextFields();
 }
 
 

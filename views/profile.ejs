@@ -2,26 +2,33 @@
 <html lang="it">
 <head>
 	<title>Profilo di <%= requested.name%> <%= requested.surname%></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/profile_style.css">
 	<link rel="stylesheet" href="/css/materialize.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/profile_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<img class="profile-picture" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo"><br>
-	<h2><%= requested.name%> <%= requested.surname%></h2>
+	<img class="profile-picture responsive-img circle" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo"><br>
+	<h2 class="flow-text"><%= requested.name%> <%= requested.surname%></h2>
 	<% if (user.id == requested.id) { %>
-		<div id="settings-box">
-			<span>Descrizione:</span><br>
-			<textarea id="description-area" maxlength="100" placeholder="Inserisci la descrizione (max 100 caratteri) e salva per confermare la modifica"><%= requested.description %></textarea>
-
-			
-			<br><span>Carica la foto profilo:</span><br>
-			<input id="image-file" type="file" name="profilepic" accept=".jpeg,.jpg,.png">
-
-			<input id="save_file_btn" type="button" value="Carica foto">
-			<input id="save_des_btn" type="button" value="Salva la descrizione">
+		<div id="settings-box" class="input-field">
+			<textarea id="description-area" class="materialize-textarea" maxlength="100" placeholder="Inserisci la descrizione (max 100 caratteri) e salva per confermare la modifica"><%= requested.description %></textarea>
+			<label for="description-area">Descrizione:</label>
 		</div>
+		
+		<div class="input-field file-field">
+			<div class="btn">
+		        <span>Scegli file</span>
+		        <input id="image-file" type="file" name="profilepic" accept=".jpeg,.jpg,.png">
+	      	</div>
+	      	<div class="file-path-wrapper">
+		    	<input class="file-path validate" type="text">
+		    </div>
+		</div>
+
+		<button id="save_file_btn" class="btn waves-effect waves-light">Carica file</button>
+		<button id="save_des_btn" class="btn waves-effect waves-light">Salva descrizione</button>
 	<% } else {%>
 		<span><%= requested.description %></span>
 	<% } %>

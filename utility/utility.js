@@ -38,7 +38,8 @@ module.exports={
 				id:data.id,
 				name:data.name,
 				surname:data.surname,
-				is_accepted:data.is_accepted
+				is_accepted:data.is_accepted,
+				is_admin:data.is_admin
 			}
 			
 			next()
@@ -62,7 +63,8 @@ module.exports={
 				id:data.id,
 				name:data.name,
 				surname:data.surname,
-				is_accepted:data.is_accepted
+				is_accepted:data.is_accepted,
+				is_admin:data.is_admin
 			}
 			return true
 		}
