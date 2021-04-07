@@ -14,7 +14,8 @@ function register(){
 			mail: $('#mail_field').val(),
 			password: $('#password_field').val(),
 			name: $('#name_field').val(),
-			surname: $('#surname_field').val()
+			surname: $('#surname_field').val(),
+			gender: $("#gender_field option:selected").prop("value")
 		},
 
 		success:(res)=>{

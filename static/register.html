@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<h2 class="flow-text">Compila i campi qui sotto e registrati</h2>
+	<h2 class="flow-text">Compila i campi qui sotto e registrati, nota che l'istruttore dovrà accettarti prima di poter entrare</h2>
 	<div class="input-field">
 		<input id="mail_field" class="validate" type="text">
 		<label for="mail_field">E-mail</label>
@@ -23,12 +23,18 @@
 		<input id="surname_field" class="validate" type="text">
 		<label for="surname_field">Cognome</label>
 	</div>
+	<div class="input-field">
+		<select id="gender_field" class="active">
+	      <option value="1">Maschio</option>
+	      <option value="0">Femmina</option>
+	    </select>
+	</div>
 	<div class="input-field">	
 		<input id="password_field" class="validate" type="password">
 		<label for="password_field">Password</label>
 	</div>
 
-	<button id="register_btn" class="btn waves-effect waves-light">Registrati</button>
+	<button id="register_btn" class="btn waves-effect waves-light deep-orange darken-3">Registrati</button>
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>
 </html>

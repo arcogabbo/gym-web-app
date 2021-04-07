@@ -14,6 +14,8 @@ router.put('/profile/des',user_controller.update_des)
 
 router.put('/profile/pic',user_controller.update_pic)
 
+router.put('/profile/pr', user_controller.update_pr)
+
 //il middleware auth controlla che l'utente sia loggato
 //prima di soddisfare la richiesta
 router.get('/profile',utility.auth,user_controller.get_profile_by_mail)

@@ -13,11 +13,16 @@ window.onload=()=>{
 		}
 	})
 
+	$('#pr_update_btn').on('click',update_pr)
+
 	//materialize update text inputs
   	M.textareaAutoResize($('#description-area'));
 
   	//init text area counter
   	$('textarea').characterCounter();
+
+  	//init collapsible
+  	$('.collapsible').collapsible()
 }
 
 
@@ -51,6 +56,25 @@ function save_des(){
 		url:'/profile/des',
 		data:{
 			description:$('#description-area').val()
+		},
+		success:(res)=>{
+			console.log(res)
+			M.toast({html:res.msg})
+		},
+		error:(obj,status,err)=>{
+			console.log(err)
+			M.toast({html:obj.responseJSON.msg})
+		}
+	})
+}
+
+function update_pr(){
+	$.ajax({
+		type:'put',
+		url:'/profile/pr',
+		data:{
+			exercise_id:$("#pr_select option:selected").prop("value"),
+			value:$('#pr_add_number').val()
 		},
 		success:(res)=>{
 			console.log(res)

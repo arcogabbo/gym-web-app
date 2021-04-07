@@ -3,11 +3,6 @@ body{
 	color:#fff;
 }
 
-.profile-picture{
-	width: 300px;
-	height: 300px !important;
-}
-
 #description-area{
 	width:360px;
 	height:55px;
@@ -15,4 +10,12 @@ body{
 
 textarea,input{
 	color:#fff;
+}
+
+td{
+	color:black;
+}
+
+select{
+	display:block!important	;
 }

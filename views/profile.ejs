@@ -5,11 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/profile_style.css">
 	<link rel="stylesheet" href="/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/profile_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<img class="profile-picture responsive-img circle" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo"><br>
+	<div class="container">
+		<img class="center-align profile-picture responsive-img circle" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo">
+	</div>
 	<h2 class="flow-text"><%= requested.name%> <%= requested.surname%></h2>
 	<% if (user.id == requested.id) { %>
 		<div id="settings-box" class="input-field">
@@ -18,7 +21,7 @@
 		</div>
 		
 		<div class="input-field file-field">
-			<div class="btn">
+			<div class="btn deep-orange darken-3">
 		        <span>Scegli file</span>
 		        <input id="image-file" type="file" name="profilepic" accept=".jpeg,.jpg,.png">
 	      	</div>
@@ -27,11 +30,51 @@
 		    </div>
 		</div>
 
-		<button id="save_file_btn" class="btn waves-effect waves-light">Carica file</button>
-		<button id="save_des_btn" class="btn waves-effect waves-light">Salva descrizione</button>
+		<button id="save_file_btn" class="btn waves-effect waves-light deep-orange darken-3">Carica file</button>
+		<button id="save_des_btn" class="btn waves-effect waves-light deep-orange darken-3">Salva descrizione</button>
 	<% } else {%>
 		<span><%= requested.description %></span>
 	<% } %>
+
+	<!-- COLLAPSIBLE -->
+	<ul class="collapsible black-text grey lighten-2">
+		<% if (user.id == requested.id) { %>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">add</i>
+				Aggiorna PR
+			</div>
+			<div class="collapsible-body">
+				<div class="input-field">
+					<select id="pr_select">
+						<option value="" disabled selected>Categoria:</option>
+							<% for (var i in exercises) { %>
+								<option value="<%= exercises[i].id %>"><%= exercises[i].name %></option>
+							<% } %>
+					</select>
+				</div>
+				<div class="input-field">
+					<input id="pr_add_number" class="active black-text" type="number">
+					<label for="pr_add_number">Massimale:</label>
+				</div>
+				<button id="pr_update_btn" class="btn waves-effect waves-light deep-orange darken-3" >Aggiorna PR</button>
+			</div>
+		</li>
+		<% } %>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">short_text</i>
+				Visualizza PR
+			</div>
+			<div class="collapsible-body">
+				<ul class="collection">
+			      <% for (var i in prs) { %>
+			      	<li class="collection-item"><%= prs[i].name %> - <%= prs[i].value %> Kg</li>
+			      <% } %>
+			    </ul>
+			</div>
+		</li>
+	</ul>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

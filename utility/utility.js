@@ -40,7 +40,8 @@ module.exports={
 				surname:data.surname,
 				mail:data.mail,
 				is_accepted:data.is_accepted,
-				is_admin:data.is_admin
+				is_admin:data.is_admin,
+				gender:data.gender
 			}
 			
 			next()
@@ -66,7 +67,8 @@ module.exports={
 				surname:data.surname,
 				mail:data.mail,
 				is_accepted:data.is_accepted,
-				is_admin:data.is_admin
+				is_admin:data.is_admin,
+				gender:data.gender
 			}
 			return true
 		}

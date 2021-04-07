@@ -20,7 +20,8 @@ module.exports={
 					surname:utente[0].surname,
 					mail:utente[0].mail,
 					is_accepted:utente[0].is_accepted,
-					is_admin:utente[0].is_admin
+					is_admin:utente[0].is_admin,
+					gender:utente[0].gender
 				}
 				//questa funzione si occuperà anche di mandare la risposta
 				utility.jwt_sign(res,token_data)
@@ -43,7 +44,7 @@ module.exports={
 			utility.json_response(res,409,{msg:'mail già usata'})
 		}else{
 			//procedo con la registrazione
-			var result=await user.create(params.mail,params.name,params.surname,params.password)
+			var result=await user.create(params.mail,params.name,params.surname,params.password,params.gender)
 			if(result){
 				//registrazione avvenuta senza errori
 				utility.json_response(res,200,{msg:'registrazione avvenuta'})
@@ -59,6 +60,8 @@ module.exports={
 
 		let file=await utility.find_pic_by_id(utente[0].id)
 
+		var exercises=await user.get_exercises()
+		var prs=await user.get_prs_by_id(utente[0].id)
 		if(utente){
 			//parte di EJS
 			var obj={
@@ -73,7 +76,9 @@ module.exports={
 					surname:utente[0].surname,
 					description:utente[0].description,
 					file_info:file ? file : {name:"default",extension:"png"}
-				}
+				},
+				prs,
+				exercises
 			}
 			res.render('profile.ejs',obj)
 		}else{
@@ -85,6 +90,9 @@ module.exports={
 		var utente=await user.read_info_by_id(req.params.id)
 
 		let file=await utility.find_pic_by_id(req.params.id)
+
+		var exercises=await user.get_exercises()
+		var prs=await user.get_prs_by_id(utente[0].id)
 		if(utente){
 			//parte di EJS
 			var obj={
@@ -99,7 +107,9 @@ module.exports={
 					surname:utente[0].surname,
 					description:utente[0].description,
 					file_info:file ? file : {name:"default",extension:"png"}
-				}
+				},
+				prs,
+				exercises
 			}
 			res.render('profile.ejs',obj)
 		}else{
@@ -154,6 +164,34 @@ module.exports={
 			    //refresh (da implementare i flash dopo)
 		    	utility.json_response(res,200,{msg:"Immagine caricata correttamente"})
 			})
+		}
+	},
+
+	update_pr:async(req,res)=>{
+		if(!utility.is_auth(req)){ 
+			return utility.json_response(res,401,{msg:"Non autorizzato"})
+		}
+		const params=utility.get_parameters(req)
+
+		//controllo se l'utente ha già inserito il pr di quell'esercizio
+		var prs=await user.get_user_prs_by_exercise_id(req.user.id,params.exercise_id)
+
+		if(prs){
+			//bisogna fare l'update
+			var result=await user.update_pr(params.exercise_id,req.user.id,req.user.gender,params.value)
+			if(result){
+				utility.json_response(res,200,{msg:"PR aggiornato correttamente"})
+			}else{
+				utility.json_response(res,500,{msg:"Errore aggiornamento PR"})
+			}
+		}else{
+			//bisogna fare l'inserimento
+			var result=await user.insert_pr(params.exercise_id,req.user.id,req.user.gender,params.value)
+			if(result){
+				utility.json_response(res,200,{msg:"PR aggiornato correttamente"})
+			}else{
+				utility.json_response(res,500,{msg:"Errore aggiornamento PR"})
+			}
 		}
 	}
 }
