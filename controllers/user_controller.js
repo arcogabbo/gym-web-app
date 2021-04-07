@@ -92,9 +92,8 @@ module.exports={
 		let file=await utility.find_pic_by_id(req.params.id)
 
 		var exercises=await user.get_exercises()
-		var prs=await user.get_prs_by_id(utente[0].id)
 		if(utente){
-			//parte di EJS
+			var prs=await user.get_prs_by_id(utente[0].id)
 			var obj={
 				user:{
 					name:req.user.name,
