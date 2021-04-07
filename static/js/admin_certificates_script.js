@@ -7,6 +7,9 @@ window.onload=()=>{
 
 	//update field di testo (materialize)
 	M.updateTextFields();
+
+	//init collapsible
+	$('.collapsible').collapsible()
 }
 
 function add_certificate(){

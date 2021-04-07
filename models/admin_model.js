@@ -79,7 +79,7 @@ module.exports={
 	},
 
 	get_lessons:async()=>{
-		var query="SELECT DATE_FORMAT(start_date, '%d-%m-%Y') AS date,DATE_FORMAT(start_date, '%H:%i') AS time,capacity,id FROM lessons WHERE start_date >= CURRENT_TIMESTAMP() ORDER BY start_date"
+		var query="SELECT DATE_FORMAT(start_date, '%d/%m') AS date,DATE_FORMAT(start_date, '%H:%i') AS time,capacity,id FROM lessons WHERE start_date >= CURRENT_TIMESTAMP() ORDER BY start_date"
 
 		var result=await db.query(query,[])
 

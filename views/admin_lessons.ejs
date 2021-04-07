@@ -5,39 +5,52 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/admin_panel.css">
 	<link rel="stylesheet" href="/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/admin_lessons_script.js" type="text/javascript"></script>
 </head>
 <body>
-	<div class="insert-lessons">
-		<h4 class="flow-text">In questa sezione ci si prende l'impegno di rispettare la lezione
-		lo stesso giorno per un mese di fila. Ad esempio inserendo il prossimo lunedì in realtà inserirai le lezioni di lunedì all'ora inserita per un mese intero, in alternativa sotto puoi inserire una singola lezione manualmente o rimuovere una già presente.</h4>
-		
-		<div class="input-field">
-			<input id="book_assurance" class="validate" type="datetime-local">
-		</div>	
-		<div class="input-field">
-			<input id="book_assurance_number" class="validate" type="number" value="8">
-			<label for="book_assurance_number">Capienza:</label>
-			<button id="book_assurance_btn" class="btn waves-effect waves-light">Crea lezioni</button>
-		</div>
-	</div>
-	<div class="insert-single-lesson">
-		<h4 class="flow-text">In questa sezione puoi inserire una singola lezione della durata di 1 ora</h4>
 
-		<div class="input-field">
-			<input id="book_single" class="validate" type="datetime-local">
-		</div>
-		<div class="input-field">
-			<input id="book_single_number" class="validate" type="number" value="8">
-			<label for="book_single_number">Capienza:</label>
-			<button id="book_single_btn" class="btn waves-effect waves-light">Crea lezione</button>
-		</div>
-	</div>
+	<!-- COLLAPSIBLE -->
+	<ul class="collapsible black-text grey lighten-2">
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">event_note</i>
+				Aggiungi lezioni per un mese
+			</div>
+			<div class="collapsible-body">
+				<div class="input-field">
+					<input id="book_assurance" class="validate" type="datetime-local">
+				</div>
+				<div class="input-field">
+					<input id="book_assurance_number" class="validate" type="number" value="8">
+					<label for="book_assurance_number">Capienza:</label>
+					<button id="book_assurance_btn" class="btn waves-effect waves-light deep-orange darken-3">Crea lezioni</button>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">description</i>
+				Aggiungi una singola lezione
+			</div>
+			<div class="collapsible-body">
+				<div class="input-field">
+					<input id="book_single" class="validate" type="datetime-local">
+				</div>
+				<div class="input-field">
+					<input id="book_single_number" class="validate" type="number" value="8">
+					<label for="book_single_number">Capienza:</label>
+					<button id="book_single_btn" class="btn waves-effect waves-light deep-orange darken-3">Crea lezione</button>
+				</div>
+			</div>
+		</li>
+	</ul>
+
 	<div class="view-lessons">
 		<h4 class="flow-text">In questa sezione vedrai le lezioni già inserite e potrai rimuoverle singolarmente</h4>
 		<table class="centered striped">
-			<thead class="teal">
+			<thead class="blue-grey darken-3">
 				<tr>
 					<th>Giorno</th>
 					<th>Ora</th>
@@ -53,7 +66,7 @@
 						<% for (var j in lessons[i]) { %>
 							<td><%= lessons[i][j] %></td>
 						<% } %>
-						<td><button id="<%= lessons[i].id %>_remove" class="remove-btn btn waves-effect waves-light">Rimuovi</button></td>
+						<td><button id="<%= lessons[i].id %>_remove" class="remove-btn btn waves-effect waves-light deep-orange darken-3">Rimuovi</button></td>
 					</tr>
 				<% } %>
 				<% } %>

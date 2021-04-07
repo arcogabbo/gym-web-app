@@ -38,6 +38,7 @@ module.exports={
 				id:data.id,
 				name:data.name,
 				surname:data.surname,
+				mail:data.mail,
 				is_accepted:data.is_accepted,
 				is_admin:data.is_admin
 			}
@@ -63,6 +64,7 @@ module.exports={
 				id:data.id,
 				name:data.name,
 				surname:data.surname,
+				mail:data.mail,
 				is_accepted:data.is_accepted,
 				is_admin:data.is_admin
 			}

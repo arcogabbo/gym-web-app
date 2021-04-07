@@ -17,7 +17,8 @@ module.exports={
 		else{
 
 			var lessons=await user.get_lessons()
-			res.render('dashboard.ejs',{lessons,user:req.user})
+			var image=await utility.find_pic_by_id(req.user.id)
+			res.render('dashboard.ejs',{lessons,user:req.user, pic: image.name+"."+image.extension})
 		}
 	},
 	

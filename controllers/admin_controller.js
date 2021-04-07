@@ -4,7 +4,7 @@ const utility=require('../utility/utility.js')
 module.exports={
 	admin_panel:async(req,res)=>{
 		//check se l'utente in sessione e' admin
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
 		var result=await admin.get_to_accept()
 
@@ -12,7 +12,7 @@ module.exports={
 	},
 
 	admin_lessons:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 
 		var result=await admin.get_lessons()
 
@@ -20,7 +20,7 @@ module.exports={
 	},
 
 	accept_user:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 
 		var result=await admin.accept_user(params.id)
@@ -33,7 +33,7 @@ module.exports={
 	},
 
 	book:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 
 		switch(params.type){
@@ -60,7 +60,7 @@ module.exports={
 	},
 
 	delete_lesson:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 
 		var result=await admin.delete_lesson(params.id)
@@ -74,7 +74,7 @@ module.exports={
 	},
 
 	show_certificates:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
 		var certificates=await admin.get_certificates()
 		var users=await admin.get_users()
@@ -83,7 +83,7 @@ module.exports={
 	},
 
 	update_certificates:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 		//controllo se l'utente al quale si vuole inserire l'abbonamento abbia
 		//gia' il record sul db
@@ -119,7 +119,7 @@ module.exports={
 	},
 
 	delete_certificates:async(req,res)=>{
-		if(!admin.is_admin(req.user.id)) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 		
 		var result=await admin.delete_certificates(params.id)

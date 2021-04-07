@@ -18,6 +18,7 @@ module.exports={
 					mail:utente[0].mail,
 					name:utente[0].name,
 					surname:utente[0].surname,
+					mail:utente[0].mail,
 					is_accepted:utente[0].is_accepted,
 					is_admin:utente[0].is_admin
 				}
