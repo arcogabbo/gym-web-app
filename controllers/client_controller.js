@@ -18,7 +18,8 @@ module.exports={
 
 			var lessons=await user.get_lessons()
 			var image=await utility.find_pic_by_id(req.user.id)
-			res.render('dashboard.ejs',{lessons,user:req.user, pic: image.name+"."+image.extension})
+			var news_count=await user.news_count()
+			res.render('dashboard.ejs',{lessons,user:req.user, pic: image.name+"."+image.extension,news_count})
 		}
 	},
 	
@@ -32,7 +33,8 @@ module.exports={
 		}else{
 			var news=await user.get_future_news()
 			var image=await utility.find_pic_by_id(req.user.id)
-			res.render('dashboard_news.ejs',{news,user:req.user, pic: image.name+"."+image.extension})
+			var news_count=news.length
+			res.render('dashboard_news.ejs',{news,user:req.user, pic: image.name+"."+image.extension,news_count})
 		}
 	}
 }

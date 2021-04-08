@@ -185,5 +185,15 @@ module.exports={
 		if(result)
 			return result
 		return null
+	},
+
+	news_count:async()=>{
+		var query="SELECT COUNT(id) AS c FROM news WHERE expire_date >= CURDATE()"
+
+		var result=await db.query(query,[])
+
+		if(result)
+			return result[0].c
+		return null
 	}
 }

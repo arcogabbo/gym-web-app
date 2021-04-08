@@ -41,7 +41,13 @@
  			</div>
  		</li>
 	    <li><a href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
-		<li><a href="/dashboard/news"><i class="material-icons">new_releases</i>Notizie</a></li>
+		<li><a href="/dashboard/news">
+			<i class="material-icons">new_releases</i>
+			Notizie
+			<% if (news_count) { %> 
+				<span class="badge red white-text" data-badge-caption="nuove"><%= news_count %></span>
+			<% } %>
+		</a></li>
 		<li><a href="#"><i class="material-icons">poll</i>Classifiche</a></li>
 		<li><a href="/profile/<%= user.id %>"><i class="material-icons">
 		account_circle</i>Profilo</a></li>
