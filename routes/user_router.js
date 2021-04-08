@@ -22,4 +22,6 @@ router.get('/profile',utility.auth,user_controller.get_profile_by_mail)
 
 router.get('/profile/:id',utility.auth,user_controller.get_profile_by_id)
 
+router.get('/news',utility.auth,user_controller.get_news)
+
 module.exports=router

@@ -176,5 +176,55 @@ module.exports={
 			return result.affectedRows
 		}
 		return false
+	},
+
+	insert_news:async(expire_date,title,content)=>{
+		var query="INSERT INTO news(expire_date,title,content) VALUES(?,?,?)"
+	
+		var result=await db.query(query,[expire_date,title,content])
+
+		if(result)
+			return result
+		return null
+	},
+
+	delete_news:async(id)=>{
+		var query="DELETE FROM news WHERE id=?"
+	
+		var result=await db.query(query,[id])
+
+		if(result)
+			return result
+		return null
+	},
+
+	update_news_date:async(id,expire_date)=>{
+		var query="UPDATE news SET expire_date=? WHERE id=?"
+		var result=await db.query(query,[expire_date,id])
+
+		if(result){
+			return result.affectedRows
+		}
+		return false
+	},
+
+	update_news_title:async(id,title)=>{
+		var query="UPDATE news SET title=? WHERE id=?"
+		var result=await db.query(query,[title,id])
+
+		if(result){
+			return result.affectedRows
+		}
+		return false
+	},
+
+	update_news_content:async(id,content)=>{
+		var query="UPDATE news SET content=? WHERE id=?"
+		var result=await db.query(query,[content,id])
+
+		if(result){
+			return result.affectedRows
+		}
+		return false
 	}
 }

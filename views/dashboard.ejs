@@ -19,7 +19,7 @@
 	    	<a href="#" data-target="mobile-panel" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 	    	<ul id="nav-mobile" class="right hide-on-med-and-down">
 	    		<li><a href="/dashboard">Dashboard</a></li>
-	    		<li><a href="#">Notizie</a></li>
+	    		<li><a href="/dashboard/news">Notizie</a></li>
 	    		<li><a href="#">Classifiche</a></li>
 	    		<li><a href="/profile/<%= user.id %>">Profilo</a></li>
 	    		<li><a href="#">Agenda personale</a></li>
@@ -41,7 +41,7 @@
  			</div>
  		</li>
 	    <li><a href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
-		<li><a href="#"><i class="material-icons">new_releases</i>Notizie</a></li>
+		<li><a href="/dashboard/news"><i class="material-icons">new_releases</i>Notizie</a></li>
 		<li><a href="#"><i class="material-icons">poll</i>Classifiche</a></li>
 		<li><a href="/profile/<%= user.id %>"><i class="material-icons">
 		account_circle</i>Profilo</a></li>
@@ -80,6 +80,7 @@
 	  	</a>
 	  	<ul>
 	  		
+	  		<li><a class="btn-floating deep-orange" href="/administrate/news"><i class="material-icons">new_releases</i></a></li>
 	    	<li><a class="btn-floating green" href="/administrate/lessons"><i class="material-icons">book</i></a></li>
 	    	<li><a class="btn-floating blue" href="/administrate/certificates"><i class="material-icons">assignment</i></a></li>
 	    	<li><a class="btn-floating yellow darken-3" href="/administrate"><i class="material-icons">verified_user</i></a></li>

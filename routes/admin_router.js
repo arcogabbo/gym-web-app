@@ -9,6 +9,8 @@ router.get('/administrate/certificates', utility.auth, admin_controller.show_cer
 
 router.get('/administrate/lessons', utility.auth, admin_controller.admin_lessons)
 
+router.get('/administrate/news', utility.auth, admin_controller.admin_news)
+
 router.put('/profile',utility.auth,admin_controller.accept_user)
 
 router.post('/lesson',utility.auth,admin_controller.book)
@@ -18,5 +20,11 @@ router.delete('/lesson',utility.auth,admin_controller.delete_lesson)
 router.put('/certificate',utility.auth,admin_controller.update_certificates)
 
 router.delete('/certificate',utility.auth,admin_controller.delete_certificates)
+
+router.delete('/news',utility.auth,admin_controller.delete_news)
+
+router.put('/news',utility.auth,admin_controller.update_news)
+
+router.post('/news',utility.auth,admin_controller.create_news)
 
 module.exports=router

@@ -165,5 +165,25 @@ module.exports={
 		if(result)
 			return result
 		return null
+	},
+
+	get_future_news:async()=>{
+		var query="SELECT id,title,content FROM news WHERE expire_date >= CURDATE()"
+
+		var result=await db.query(query,[])
+
+		if(result)
+			return result
+		return null
+	},
+
+	get_news_by_id:async(id)=>{
+		var query="SELECT * FROM news WHERE id=?"
+
+		var result=await db.query(query,[id])
+
+		if(result)
+			return result
+		return null
 	}
 }

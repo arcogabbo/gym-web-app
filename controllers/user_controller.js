@@ -192,5 +192,26 @@ module.exports={
 				utility.json_response(res,500,{msg:"Errore aggiornamento PR"})
 			}
 		}
+	},
+
+	get_news:async(req,res)=>{
+		const params=utility.get_parameters(req)
+		if(params.id){
+			var result=await user.get_news_by_id(params.id)
+
+			if(result){
+				utility.json_response(res,200,{data:result})
+			}else{
+				utility.json_response(res,500,{msg:"Errore fetch delle news"})
+			}
+		}else{
+			var result=await user.get_future_news()
+
+			if(result){
+				utility.json_response(res,200,{data:result})
+			}else{
+				utility.json_response(res,500,{msg:"Errore fetch delle news"})
+			}
+		}
 	}
 }

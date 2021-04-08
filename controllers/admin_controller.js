@@ -1,5 +1,6 @@
 const admin=require('../models/admin_model.js')
 const utility=require('../utility/utility.js')
+const user=require('../models/user_model.js')
 
 module.exports={
 	admin_panel:async(req,res)=>{
@@ -128,6 +129,59 @@ module.exports={
 			utility.json_response(res,200,{msg:"Certificati rimossi correttamente"})
 		}else{
 			utility.json_response(res,500,{msg:"Errore rimozione certificati"})
+		}
+	},
+
+	admin_news:async(req,res)=>{
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		
+		var news=await user.get_future_news()
+
+		res.render("admin_news.ejs",{news})
+	},
+
+	delete_news:async(req,res)=>{
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		const params=utility.get_parameters(req)
+		
+		var result=await admin.delete_news(params.id)
+		if(result){
+			utility.json_response(res,200,{msg:"Notizia rimossa correttamente"})
+		}else{
+			utility.json_response(res,500,{msg:"Errore rimozione notizia"})
+		}
+	},
+
+	create_news:async(req,res)=>{
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		const params=utility.get_parameters(req)
+		
+		var result=await admin.insert_news(params.expire_date,params.title,params.content)
+		if(result){
+			utility.json_response(res,200,{msg:"Notizia aggiunta correttamente"})
+		}else{
+			utility.json_response(res,500,{msg:"Errore aggiunta notizia"})
+		}
+	},
+
+	update_news:async(req,res)=>{
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		const params=utility.get_parameters(req)
+
+		if(params.title != null){
+			var result1=await admin.update_news_title(params.id,params.title)
+		}
+		if(params.expire_date != null){
+			var result2=await admin.update_news_date(params.id,params.expire_date)
+		}
+		if(params.content != null){
+			var result3=await admin.update_news_content(params.id,params.content)
+		}
+
+		if(result1 || result2 || result3){
+			utility.json_response(res,200,{msg:"Notizia aggiornata correttamente"})
+		}else{
+			utility.json_response(res,500,{msg:"Errore aggiornamento notizia"})
 		}
 	}
 }

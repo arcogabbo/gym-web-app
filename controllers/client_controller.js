@@ -24,5 +24,15 @@ module.exports={
 	
 	register:(req,res)=>{
 		res.redirect('/register.html')
+	},
+
+	news_page:async(req,res)=>{
+		if(!utility.is_auth(req)){
+			res.redirect('/login.html')
+		}else{
+			var news=await user.get_future_news()
+			var image=await utility.find_pic_by_id(req.user.id)
+			res.render('dashboard_news.ejs',{news,user:req.user, pic: image.name+"."+image.extension})
+		}
 	}
 }
