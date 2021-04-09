@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Classifiche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/css/dashboard_style.css">
+	<link rel="stylesheet" href="/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/js/leaderboard_script.js" type="text/javascript"></script>
+</head>
+<body>
+
+	<!-- NAVBAR -->
+	<div class="navbar-fixed">
+		<nav>
+	    <div class="nav-wrapper red darken-3">
+	    	<a href="#" class="brand-logo center">CScarab</a>
+	    	<a href="#" data-target="mobile-panel" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+	    	<ul id="nav-mobile" class="right hide-on-med-and-down">
+	    		<li><a href="/dashboard">Dashboard</a></li>
+	    		<li><a href="/dashboard/news">Notizie</a></li>
+	    		<li><a href="/dashboard/leaderboard">Classifiche</a></li>
+	    		<li><a href="/profile/<%= user.id %>">Profilo</a></li>
+	    		<li><a href="#">Agenda personale</a></li>
+	      </ul>
+	    </div>
+	  	</nav>
+ 	</div>
+
+ 	<!-- MOBILE SIDE-BAR -->
+ 	<ul class="sidenav" id="mobile-panel">
+ 		<li>
+ 			<div class="user-view">
+ 				<div class="background">
+ 					<img src="/images/default.png">
+ 				</div>
+ 				<a href="/profile/<%= user.id %>"><img class="circle" src="/images/<%= pic %>"></a>
+ 				<a><span class="white-text name"><%= user.name %> <%= user.surname %></span></a>
+ 				<a><span class="white-text email"><%= user.mail %></span></a>
+ 			</div>
+ 		</li>
+	    <li><a href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+		<li><a href="/dashboard/news">
+			<i class="material-icons">new_releases</i>
+			Notizie
+			<% if (news_count) { %> 
+				<span class="badge red white-text" data-badge-caption="nuove"><%= news_count %></span>
+			<% } %>
+		</a></li>
+		<li><a href="/dashboard/leaderboard"><i class="material-icons">poll</i>Classifiche</a></li>
+		<li><a href="/profile/<%= user.id %>"><i class="material-icons">
+		account_circle</i>Profilo</a></li>
+		<li><a href="#"><i class="material-icons">bookmark</i>Agenda personale</a></li>
+  	</ul>
+
+  	<!-- CONTENT -->
+  	<div class="container">
+  		<h4 class="flow-text">Sezione Classifiche</h4>
+
+  		<!-- LB Male -->
+  		<% for(var i in leaderboard_m) { %>
+  			<% if(leaderboard_m[i]) { %>
+  				<div class="card grey lighten-1">
+		      	<div class="card-content">
+		      		<span class="card-title black-text"><%= leaderboard_m[i][0].exercise_name %> (M)</span>
+		      		<% for(var j=0;j<3;j++) { %>
+		      			<% if(leaderboard_m[i][j]) { %>
+		      			<% let icon="" 
+		      			   let medal_color=""
+		      				switch(j){
+		      					case 0:
+		      						icon="looks_one"
+		      						medal_color="gold-medal"
+		      						break
+		      					case 1:
+		      						icon="looks_two"
+		      						medal_color="silver-medal"
+		      						break
+		      					case 2:
+		      						icon="looks_3"
+		      						medal_color="bronze-medal"
+		      						break
+		      			} %>
+		          		<div class="valign-wrapper">
+		          			<i class="material-icons <%= medal_color %>"><%= icon %></i>
+		          			<span class="flow-text black-text"><%= leaderboard_m[i][j].name %> <%= leaderboard_m[i][j].surname %> - <%= leaderboard_m[i][j].value %>Kg</span><br>
+		          		</div>
+		          		<% } %>
+		        	<% } %>
+		        </div>
+		      </div>
+  			<% } %>
+  		<% } %>
+
+  		<!-- LB Female -->
+  		<% for(var i in leaderboard_f) { %>
+  			<% if(leaderboard_f[i]) { %>
+  				<div class="card grey lighten-1">
+		      	<div class="card-content">
+		      		<span class="card-title black-text"><%= leaderboard_f[i][0].exercise_name %> (F)</span>
+		      		<% for(var j=0;j<3;j++) { %>
+		      			<% if(leaderboard_f[i][j]) { %>
+		      			<% let icon="" 
+		      			   let medal_color=""
+		      				switch(j){
+		      					case 0:
+		      						icon="looks_one"
+		      						medal_color="gold-medal"
+		      						break
+		      					case 1:
+		      						icon="looks_two"
+		      						medal_color="silver-medal"
+		      						break
+		      					case 2:
+		      						icon="looks_3"
+		      						medal_color="bronze-medal"
+		      						break
+		      			} %>
+		          		<div class="valign-wrapper">
+		          			<i class="material-icons <%= medal_color %>"><%= icon %></i>
+		          			<span class="flow-text black-text"><%= leaderboard_f[i][j].name %> <%= leaderboard_f[i][j].surname %> - <%= leaderboard_f[i][j].value %>Kg</span><br>
+		          		</div>
+		          		<% } %>
+		        	<% } %>
+		        </div>
+		      </div>
+  			<% } %>
+  		<% } %>
+  	</div>
+
+	<script type="text/javascript" src="/js/materialize.min.js"></script>
+</body>
+</html>

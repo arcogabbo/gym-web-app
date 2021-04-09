@@ -20,7 +20,7 @@
 	    	<ul id="nav-mobile" class="right hide-on-med-and-down">
 	    		<li><a href="/dashboard">Dashboard</a></li>
 	    		<li><a href="/dashboard/news">Notizie</a></li>
-	    		<li><a href="#">Classifiche</a></li>
+	    		<li><a href="/dashboard/leaderboard">Classifiche</a></li>
 	    		<li><a href="/profile/<%= user.id %>">Profilo</a></li>
 	    		<li><a href="#">Agenda personale</a></li>
 	      </ul>
@@ -48,7 +48,7 @@
 				<span class="badge red white-text" data-badge-caption="nuove"><%= news_count %></span>
 			<% } %>
 		</a></li>
-		<li><a href="#"><i class="material-icons">poll</i>Classifiche</a></li>
+		<li><a href="/dashboard/leaderboard"><i class="material-icons">poll</i>Classifiche</a></li>
 		<li><a href="/profile/<%= user.id %>"><i class="material-icons">
 		account_circle</i>Profilo</a></li>
 		<li><a href="#"><i class="material-icons">bookmark</i>Agenda personale</a></li>

@@ -195,5 +195,15 @@ module.exports={
 		if(result)
 			return result[0].c
 		return null
+	},
+
+	obtain_leaderboard_by_exercise_id:async(exercise_id,gender)=>{
+		var query="SELECT exercises.name AS exercise_name,prs.gender,prs.value,users.name,users.surname, RANK() OVER (ORDER BY value DESC) AS rank FROM exercises INNER JOIN prs ON exercises.id=prs.exercise_id INNER JOIN users ON prs.user_id=users.id WHERE exercise_id=? AND prs.gender=? LIMIT 3"
+
+		var result=await db.query(query,[exercise_id,gender])
+
+		if(result)
+			return result
+		return null
 	}
 }

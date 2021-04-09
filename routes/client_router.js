@@ -11,4 +11,6 @@ router.get('/register', client_controller.register)
 
 router.get('/dashboard/news', client_controller.news_page)
 
+router.get('/dashboard/leaderboard',client_controller.leaderboard_page)
+
 module.exports=router
