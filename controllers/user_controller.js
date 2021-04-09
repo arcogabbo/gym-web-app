@@ -117,10 +117,6 @@ module.exports={
 	},
 
 	update_des:async(req,res)=>{
-		if(!utility.is_auth(req)){ 
-			return utility.json_response(res,401,{msg:"Non autorizzato"})
-		}
-
 		const params=utility.get_parameters(req)
 
 
@@ -137,11 +133,6 @@ module.exports={
 	},
 
 	update_pic:async(req,res)=>{
-		if(!utility.is_auth(req)){ 
-			return utility.json_response(res,401,{msg:"Non autorizzato"})
-		}
-
-		
 		//elimino la pic precedente se esistente
 		var file_info=await utility.find_pic_by_id(req.user.id)
 		var flag=false
@@ -167,9 +158,6 @@ module.exports={
 	},
 
 	update_pr:async(req,res)=>{
-		if(!utility.is_auth(req)){ 
-			return utility.json_response(res,401,{msg:"Non autorizzato"})
-		}
 		const params=utility.get_parameters(req)
 
 		//controllo se l'utente ha già inserito il pr di quell'esercizio

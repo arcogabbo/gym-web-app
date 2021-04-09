@@ -10,11 +10,11 @@ router.post('/login',user_controller.create_session)
 
 router.post('/profile',user_controller.create_user)
 
-router.put('/profile/des',user_controller.update_des)
+router.put('/profile/des',utility.auth,user_controller.update_des)
 
-router.put('/profile/pic',user_controller.update_pic)
+router.put('/profile/pic',utility.auth,user_controller.update_pic)
 
-router.put('/profile/pr', user_controller.update_pr)
+router.put('/profile/pr',utility.auth, user_controller.update_pr)
 
 //il middleware auth controlla che l'utente sia loggato
 //prima di soddisfare la richiesta
