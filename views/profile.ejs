@@ -10,6 +10,9 @@
 	<script src="/js/profile_script.js" type="text/javascript"></script>
 </head>
 <body>
+
+	<%- include ('bar.ejs') %>
+
 	<div class="container">
 	<div class="container">
 		<img class="center-align profile-picture responsive-img circle" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo">
@@ -77,6 +80,8 @@
 		</li>
 	</ul>
 	</div>
+
+	<%- include ('admin_button.ejs') %>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

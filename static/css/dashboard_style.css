@@ -26,3 +26,7 @@ input{
 .bronze-medal{
 	color:#a67a00!important;
 }
+
+select{
+	display:block!important;
+}

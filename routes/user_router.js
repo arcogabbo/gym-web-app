@@ -24,4 +24,10 @@ router.get('/profile/:id',utility.auth,user_controller.get_profile_by_id)
 
 router.get('/news',utility.auth,user_controller.get_news)
 
+router.get('/diary',utility.auth,user_controller.get_diary)
+
+router.put('/diary',utility.auth,user_controller.update_diary)
+
+router.delete('/diary',utility.auth,user_controller.delete_diary)
+
 module.exports=router

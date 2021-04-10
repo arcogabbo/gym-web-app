@@ -1,0 +1,15 @@
+<% if (user.is_admin) { %>
+	<div class="fixed-action-btn click-to-toggle horizontal">
+	  	<a class="btn-floating btn-large red">
+	    	<i class="large material-icons">mode_edit</i>
+	  	</a>
+	  	<ul>
+	  		
+	  		<li><a class="btn-floating deep-orange" href="/administrate/news"><i class="material-icons">new_releases</i></a></li>
+	    	<li><a class="btn-floating green" href="/administrate/lessons"><i class="material-icons">book</i></a></li>
+	    	<li><a class="btn-floating blue" href="/administrate/certificates"><i class="material-icons">assignment</i></a></li>
+	    	<li><a class="btn-floating yellow darken-3" href="/administrate"><i class="material-icons">verified_user</i></a></li>
+	    	
+	  	</ul>
+	</div>
+<% } %>

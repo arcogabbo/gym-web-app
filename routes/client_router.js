@@ -13,4 +13,6 @@ router.get('/dashboard/news', client_controller.news_page)
 
 router.get('/dashboard/leaderboard',client_controller.leaderboard_page)
 
+router.get('/dashboard/diary', client_controller.diary_page)
+
 module.exports=router

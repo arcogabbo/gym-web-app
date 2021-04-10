@@ -11,48 +11,7 @@
 </head>
 <body>
 
-	<!-- NAVBAR -->
-	<div class="navbar-fixed">
-		<nav>
-	    <div class="nav-wrapper red darken-3">
-	    	<a href="#" class="brand-logo center">CScarab</a>
-	    	<a href="#" data-target="mobile-panel" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-	    	<ul id="nav-mobile" class="right hide-on-med-and-down">
-	    		<li><a href="/dashboard">Dashboard</a></li>
-	    		<li><a href="/dashboard/news">Notizie</a></li>
-	    		<li><a href="/dashboard/leaderboard">Classifiche</a></li>
-	    		<li><a href="/profile/<%= user.id %>">Profilo</a></li>
-	    		<li><a href="#">Agenda personale</a></li>
-	      </ul>
-	    </div>
-	  	</nav>
- 	</div>
-
- 	<!-- MOBILE SIDE-BAR -->
- 	<ul class="sidenav" id="mobile-panel">
- 		<li>
- 			<div class="user-view">
- 				<div class="background">
- 					<img src="/images/default.png">
- 				</div>
- 				<a href="/profile/<%= user.id %>"><img class="circle" src="/images/<%= pic %>"></a>
- 				<a><span class="white-text name"><%= user.name %> <%= user.surname %></span></a>
- 				<a><span class="white-text email"><%= user.mail %></span></a>
- 			</div>
- 		</li>
-	    <li><a href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
-		<li><a href="/dashboard/news">
-			<i class="material-icons">new_releases</i>
-			Notizie
-			<% if (news_count) { %> 
-				<span class="badge red white-text" data-badge-caption="nuove"><%= news_count %></span>
-			<% } %>
-		</a></li>
-		<li><a href="/dashboard/leaderboard"><i class="material-icons">poll</i>Classifiche</a></li>
-		<li><a href="/profile/<%= user.id %>"><i class="material-icons">
-		account_circle</i>Profilo</a></li>
-		<li><a href="#"><i class="material-icons">bookmark</i>Agenda personale</a></li>
-  	</ul>
+	<%- include ('bar.ejs') %>
 
 	<!-- CONTENT -->
 	<% if(news) { %>
@@ -71,6 +30,8 @@
 	<% } else { %>
 		<h4 class="flow-text">Al momento non ci sono notizie</h4>
 	<% } %>
+
+	<%- include ('admin_button.ejs') %>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

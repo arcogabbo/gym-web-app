@@ -61,15 +61,11 @@ module.exports={
 		let file=await utility.find_pic_by_id(utente[0].id)
 
 		var exercises=await user.get_exercises()
-		var prs=await user.get_prs_by_id(utente[0].id)
 		if(utente){
-			//parte di EJS
+			var prs=await user.get_prs_by_id(utente[0].id)
+			var profile_img=await utility.find_pic_by_id(req.user.id)
+			var news_count=await user.news_count()
 			var obj={
-				user:{
-					name:req.user.name,
-					id:req.user.id,
-					surname:req.user.surname
-				},
 				requested:{
 					name:utente[0].name,
 					id:utente[0].id,
@@ -78,7 +74,10 @@ module.exports={
 					file_info:file ? file : {name:"default",extension:"png"}
 				},
 				prs,
-				exercises
+				exercises,
+				user:req.user,
+				pic: profile_img?profile_img.name+"."+profile_img.extension:"default.png",
+				news_count
 			}
 			res.render('profile.ejs',obj)
 		}else{
@@ -90,16 +89,13 @@ module.exports={
 		var utente=await user.read_info_by_id(req.params.id)
 
 		let file=await utility.find_pic_by_id(req.params.id)
-
+		
 		var exercises=await user.get_exercises()
 		if(utente){
 			var prs=await user.get_prs_by_id(utente[0].id)
+			var profile_img=await utility.find_pic_by_id(req.user.id)
+			var news_count=await user.news_count()
 			var obj={
-				user:{
-					name:req.user.name,
-					id:req.user.id,
-					surname:req.user.surname
-				},
 				requested:{
 					name:utente[0].name,
 					id:utente[0].id,
@@ -108,7 +104,10 @@ module.exports={
 					file_info:file ? file : {name:"default",extension:"png"}
 				},
 				prs,
-				exercises
+				exercises,
+				user:req.user,
+				pic: profile_img?profile_img.name+"."+profile_img.extension:"default.png",
+				news_count
 			}
 			res.render('profile.ejs',obj)
 		}else{
@@ -200,6 +199,69 @@ module.exports={
 			}else{
 				utility.json_response(res,500,{msg:"Errore fetch delle news"})
 			}
+		}
+	},
+
+	get_diary:async(req,res)=>{
+		const params=utility.get_parameters(req)
+
+		if(params.lesson_id){
+			var result=await user.get_lesson_diary(params.lesson_id,req.user.id)
+
+			if(result){
+				utility.json_response(res,200,{data:result})
+			}else{
+				utility.json_response(res,500,{msg:"Errore fetch del diario"})
+			}
+		}else{
+			var result=await user.get_diaries(req.user.id)
+
+			if(result){
+				utility.json_response(res,200,{data:result})
+			}else{
+				utility.json_response(res,500,{msg:"Diario vuoto o errore fetch"})
+			}
+		}
+	},
+
+	update_diary:async(req,res)=>{
+		const params=utility.get_parameters(req)
+		//controllo se l'utente aveva gia' una entry per quella lezione
+		var result=await user.get_lesson_diary(params.lesson_id,req.user.id)
+
+		if(result){
+			//aggiornamento diario
+			var result2=await user.update_diary_content(params.lesson_id,req.user.id,params.content)
+			
+			if(result2){
+				utility.json_response(res,200,{msg:"Pagina aggiornata"})
+			}else{
+				utility.json_response(res,500,{msg:"Errore aggiornamento pagina"})
+			}
+		}else{
+			//inserimento diario
+			var result2=await user.insert_to_diary(params.lesson_id,params.date,req.user.id,params.content)
+			
+			if(result2){
+				utility.json_response(res,200,{msg:"Inserito nel diario"})
+			}else{
+				utility.json_response(res,500,{msg:"Errore inserimento nel diario"})
+			}
+		}
+	},
+
+	delete_diary:async(req,res)=>{
+		const params=utility.get_parameters(req)
+		if(params.lesson_id){
+			var result=await user.delete_diary(params.lesson_id,req.user.id)
+
+			if(result){
+				utility.json_response(res,200,{msg:"Pagina eliminata"})
+			}else{
+				utility.json_response(res,500,{msg:"Errore rimozione pagina"})
+			}
+		}else{
+			utility.json_response(res,400,{msg:"Parametri errati"})
 		}
 	}
 }

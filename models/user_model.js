@@ -205,5 +205,65 @@ module.exports={
 		if(result)
 			return result
 		return null
+	},
+
+	get_diaries:async(user_id)=>{
+		var query="SELECT DATE_FORMAT(start_date, '%d/%m - %H:%i') AS start_date,content,lesson_id FROM diaries WHERE user_id=? ORDER BY start_date"
+	
+		var result=await db.query(query,[user_id])
+
+		if(result)
+			return result
+		return null
+	},
+
+	get_lesson_diary:async(lesson_id,user_id)=>{
+		var query="SELECT DATE_FORMAT(start_date, '%d/%m - %H:%i') AS start_date,content,lesson_id FROM diaries WHERE lesson_id=? AND user_id=?"
+	
+		var result=await db.query(query,[lesson_id,user_id])
+
+		if(result)
+			return result
+		return null
+	},
+
+	insert_to_diary:async(lesson_id,date,user_id,content)=>{
+		var query="INSERT INTO diaries(lesson_id,start_date,user_id,content) VALUES(?,?,?,?)"
+		var result=await db.query(query,[lesson_id,date,user_id,content])
+
+		if(result)
+			return result
+		return null
+	},
+
+	update_diary_content:async(lesson_id,user_id,content)=>{
+		var query="UPDATE diaries SET content=? WHERE lesson_id=? AND user_id=?"
+
+		var result=await db.query(query,[content,lesson_id,user_id])
+
+		if(result)
+			return result.affectedRows
+		return null
+	},
+
+	delete_diary:async(lesson_id,user_id)=>{
+		var query="DELETE FROM diaries WHERE lesson_id=? AND user_id=?"
+
+		var result=await db.query(query,[lesson_id,user_id])
+
+		if(result)
+			return result
+		return null
+	},
+
+	get_past_lessons_by_user_id:async(user_id)=>{
+		//ritorno le lezioni (massimo fino ad una settimana prima) cui l'utente ha partecipato
+		var query="SELECT lessons.id,DATE_FORMAT(lessons.start_date, '%d/%m - %H:%i') AS format_date,DATE_FORMAT(lessons.start_date, '%Y-%m-%d %H:%i:%s') AS start_date,books.user_id FROM lessons INNER JOIN books ON lessons.id=books.lesson_id WHERE books.user_id=? AND lessons.start_date <= CURRENT_TIMESTAMP() AND lessons.start_date >= DATE_SUB(CURRENT_TIMESTAMP(),INTERVAL 1 WEEK)"
+		
+		var result=await db.query(query,[user_id])
+
+		if(result)
+			return result
+		return null
 	}
 }
