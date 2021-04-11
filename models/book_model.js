@@ -1,9 +1,9 @@
 const db=require('./db.js')
 
 module.exports={
-	insert_book:async(lesson_id,user_id,user_name)=>{
-		var query="INSERT INTO books(lesson_id,user_id,user_name) VALUES(?,?,?)"
-		var res=await db.query(query,[lesson_id,user_id,user_name])
+	insert_book:async(lesson_id,user_id,user_name,user_surname)=>{
+		var query="INSERT INTO books(lesson_id,user_id,user_name,user_surname) VALUES(?,?,?,?)"
+		var res=await db.query(query,[lesson_id,user_id,user_name,user_surname])
 
 		if(res)
 			return res

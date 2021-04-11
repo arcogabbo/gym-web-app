@@ -16,8 +16,17 @@ module.exports={
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 
 		var result=await admin.get_lessons()
-
-		res.render('admin_lessons.ejs',{lessons:result})
+		var partecipants={}
+		for(var i in result){
+			var x=await admin.get_lessons_partecipants(result[i].id)
+			//creo un array relativo alla lezione
+			partecipants['lesson_'+x[0].lesson_id]=[]
+			for(var j in x){
+				partecipants['lesson_'+x[0].lesson_id].push({name:x[j].user_name,surname:x[j].user_surname})
+			}
+		}
+		
+		res.render('admin_lessons.ejs',{lessons:result,partecipants})
 	},
 
 	accept_user:async(req,res)=>{

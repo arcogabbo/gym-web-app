@@ -10,6 +10,11 @@ window.onload=()=>{
 
 	//init collapsible
 	$('.collapsible').collapsible()
+
+	//init modals
+	$('.modal').modal({
+      
+    });
 }
 
 

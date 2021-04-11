@@ -88,6 +88,16 @@ module.exports={
 		return null
 	},
 
+	get_lessons_partecipants:async(lesson_id)=>{
+		var query="SELECT books.*,lessons.start_date FROM books INNER JOIN lessons ON books.lesson_id=lessons.id WHERE start_date >= CURRENT_TIMESTAMP() AND lesson_id=? ORDER BY start_date"
+	
+		var result=await db.query(query,[lesson_id])
+
+		if(result)
+			return result
+		return null
+	},
+
 	delete_lesson:async(id)=>{
 		var query="DELETE FROM lessons WHERE id=?"
 	

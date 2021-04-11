@@ -27,7 +27,7 @@ module.exports={
 			var result=await book.get_lesson_capacity(params.lesson_id)
 
 			if( result[0].capacity > result[0].n_books ){
-				var pren=await book.insert_book(params.lesson_id,req.user.id,req.user.name)
+				var pren=await book.insert_book(params.lesson_id,req.user.id,req.user.name,req.user.surname)
 
 				if(pren){
 					await book.add_book_on_lesson(params.lesson_id)

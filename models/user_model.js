@@ -208,7 +208,7 @@ module.exports={
 	},
 
 	get_diaries:async(user_id)=>{
-		var query="SELECT DATE_FORMAT(start_date, '%d/%m - %H:%i') AS start_date,content,lesson_id FROM diaries WHERE user_id=? ORDER BY start_date"
+		var query="SELECT DATE_FORMAT(start_date, '%d/%m - %H:%i') AS start_date,content,lesson_id FROM diaries WHERE user_id=? ORDER BY start_date DESC"
 	
 		var result=await db.query(query,[user_id])
 
