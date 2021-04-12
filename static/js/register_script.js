@@ -9,7 +9,7 @@ window.onload=()=>{
 function register(){
 	$.ajax({
 		type:'post',
-		url:'/profile',
+		url:'/user',
 		data:{
 			mail: $('#mail_field').val(),
 			password: $('#password_field').val(),

@@ -11,7 +11,7 @@ router.get('/administrate/lessons', utility.auth, admin_controller.admin_lessons
 
 router.get('/administrate/news', utility.auth, admin_controller.admin_news)
 
-router.put('/profile',utility.auth,admin_controller.accept_user)
+router.put('/user',utility.auth,admin_controller.accept_user)
 
 router.post('/lesson',utility.auth,admin_controller.book)
 

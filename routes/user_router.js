@@ -8,23 +8,25 @@ const router=express.Router()
 
 router.post('/login',user_controller.create_session)
 
-router.post('/profile',user_controller.create_user)
+router.post('/user',user_controller.create_user)
 
 //il middleware auth controlla che l'utente sia loggato
 //prima di soddisfare la richiesta
-router.get('/profile/info',utility.auth, user_controller.get_profile_info)
+router.get('/user',utility.auth, user_controller.get_profile_info)
 
-router.get('/profile/des',utility.auth,user_controller.get_des)
+router.get('/user/des',utility.auth,user_controller.get_des)
 
-router.put('/profile/des',utility.auth,user_controller.update_des)
+router.put('/user/des',utility.auth,user_controller.update_des)
 
-router.get('/profile/pic',utility.auth,user_controller.get_pic)
+router.get('/user/pic',utility.auth,user_controller.get_pic)
 
-router.put('/profile/pic',utility.auth,user_controller.update_pic)
+router.put('/user/pic',utility.auth,user_controller.update_pic)
 
-router.get('/profile/pr',utility.auth, user_controller.get_pr)
+router.get('/user/pr',utility.auth, user_controller.get_pr)
 
-router.put('/profile/pr',utility.auth, user_controller.update_pr)
+router.put('/user/pr',utility.auth, user_controller.update_pr)
+
+//l'endpoint user serve per le operazioni sull'utente, profile serve solo lato client
 
 router.get('/profile',utility.auth,user_controller.get_profile_by_mail)
 

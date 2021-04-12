@@ -39,7 +39,7 @@ function save_changes(){
 
 	$.ajax({
 		type:'put',
-		url:'/profile/pic',
+		url:'/user/pic',
 		data:form_data,
 		success:(res)=>{
 			console.log(res)
@@ -59,7 +59,7 @@ function save_changes(){
 function save_des(){
 	$.ajax({
 		type:'put',
-		url:'/profile/des',
+		url:'/user/des',
 		data:{
 			description:$('#description-area').val()
 		},
@@ -77,7 +77,7 @@ function save_des(){
 function update_pr(){
 	$.ajax({
 		type:'put',
-		url:'/profile/pr',
+		url:'/user/pr',
 		data:{
 			exercise_id:$("#pr_select option:selected").prop("value"),
 			value:$('#pr_add_number').val()

@@ -7,7 +7,7 @@ function accept(){
 
 	$.ajax({
 		type:'put',
-		url:'/profile',
+		url:'/user',
 		data:{
 			id:id
 		},
