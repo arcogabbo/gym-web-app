@@ -83,6 +83,18 @@ module.exports={
 		}
 	},
 
+	get_certificates:async(req,res)=>{
+		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
+
+		var certificates=await admin.get_certificates()
+
+		if(certificates){
+			utility.json_response(res,200,{data:certificates})
+		}else{
+			utility.json_response(res,200,{data:null})
+		}
+	},
+
 	show_certificates:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		

@@ -1,5 +1,6 @@
 const user=require('../models/user_model.js')
 const utility=require('../utility/utility.js')
+const config=require('../utility/config.js')
 
 module.exports={
 	create_session:async(req,res)=>{
@@ -115,6 +116,41 @@ module.exports={
 		}
 	},
 
+	get_profile_info:async(req,res)=>{
+		const params=utility.get_parameters(req)
+
+		if(params.id){
+			var utente=await user.read_info_by_id(params.id)
+			var pic=await utility.find_pic_by_id(params.id)
+			var prs=await user.get_prs_by_id(utente[0].id)
+			var obj={
+				utente:{
+					name:utente[0].name,
+					id:utente[0].id,
+					surname:utente[0].surname,
+					description:utente[0].description,
+				},
+				pic,
+				prs
+			}
+			utility.json_response(res,200,{data:obj})
+		}else{
+			utility.json_response(res,400,{msg:"Parametri errati"})
+		}
+	},
+
+	get_des:async(req,res)=>{
+		const params=utility.get_parameters(req)
+
+		var result=await user.get_description_by_id(params.id)
+
+		if(result){
+			utility.json_response(res,200,{data:result})
+		}else{
+			utility.json_response(res,500,{msg:"Errore ottenimento descrizione"})
+		}
+	},
+
 	update_des:async(req,res)=>{
 		const params=utility.get_parameters(req)
 
@@ -129,6 +165,18 @@ module.exports={
 
 		//refresh (da implementare i flash dopo)
 		utility.json_response(res,200,{msg:"Descrizione salvata correttamente"})
+	},
+
+	get_pic:async(req,res)=>{
+		const params=utility.get_parameters(req)
+
+		if(params.id){
+			var file_info=await utility.find_pic_by_id(params.id)
+
+			utility.json_response(res,200,{data:file_info?'/images/'+file_info.name+'.'+file_info.extension:"/images/default.png"})
+		}else{
+			utility.json_response(res,400,{msg:"Parametri errati"})
+		}
 	},
 
 	update_pic:async(req,res)=>{
@@ -146,13 +194,26 @@ module.exports={
 			//console.log(req.files)
 			var file = req.files.file;
 			var extension=file.name.split('.').pop()
-			var path="/home/arcogabbo/Scrivania/cscarab_webapp/static/images/"+utente[0].id+"."+extension
+
+			var path=config.path_to_images+utente[0].id+"."+extension
 			file.mv(path,(err)=>{
 			    if (err) return utility.json_response(res,500,{msg:"Impossibile caricare l'immagine"})
 
 			    //refresh (da implementare i flash dopo)
 		    	utility.json_response(res,200,{msg:"Immagine caricata correttamente"})
 			})
+		}
+	},
+
+	get_pr:async(req,res)=>{
+		const params=utility.get_parameters(req)
+
+		var prs=await user.get_user_prs_by_exercise_id(req.user.id,params.exercise_id)
+
+		if(prs){
+			utility.json_response(res,200,{data:prs})
+		}else{
+			utility.json_response(res,500,{msg:"Errore ottenimento record"})
 		}
 	},
 

@@ -13,7 +13,8 @@ window.onload=()=>{
 
 	//init modals
 	$('.modal').modal({
-      
+      startingTop:"20%",
+      endingTop:"25%"
     });
 }
 

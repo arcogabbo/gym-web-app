@@ -17,6 +17,8 @@ router.post('/lesson',utility.auth,admin_controller.book)
 
 router.delete('/lesson',utility.auth,admin_controller.delete_lesson)
 
+router.get('/certificate',utility.auth,admin_controller.get_certificates)
+
 router.put('/certificate',utility.auth,admin_controller.update_certificates)
 
 router.delete('/certificate',utility.auth,admin_controller.delete_certificates)
