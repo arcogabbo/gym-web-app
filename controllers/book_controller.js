@@ -61,12 +61,25 @@ module.exports={
 	},
 
 	get_future_lessons:async(req,res)=>{
-		var lessons=await book.get_future_lessons()
+		const params=utility.get_parameters(req)
 
-		if(lessons){
-			utility.json_response(res,200,{lessons})
+		if(params.id){
+			var lesson=await book.get_lesson(params.id)
+
+			if(lesson){
+				utility.json_response(res,200,{data:lesson})
+			}else{
+				utility.json_response(res,404,{msg:"Lezione non trovata"})
+			}
+
 		}else{
-			utility.json_response(res,500,{msg:"Errore caricamento lezioni"})
+			var lessons=await book.get_future_lessons()
+
+			if(lessons){
+				utility.json_response(res,200,{data:lessons})
+			}else{
+				utility.json_response(res,500,{msg:"Errore caricamento lezioni"})
+			}
 		}
 	}
 }

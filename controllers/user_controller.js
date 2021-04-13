@@ -208,7 +208,7 @@ module.exports={
 	get_pr:async(req,res)=>{
 		const params=utility.get_parameters(req)
 
-		var prs=await user.get_user_prs_by_exercise_id(req.user.id,params.exercise_id)
+		var prs=await user.get_user_prs_by_exercise_id(params.id,params.exercise_id)
 
 		if(prs){
 			utility.json_response(res,200,{data:prs})

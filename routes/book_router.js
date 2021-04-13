@@ -7,6 +7,6 @@ router.post('/book', utility.auth, book_controller.create_book)
 
 router.delete('/book',utility.auth, book_controller.delete_book)
 
-router.get('/lessons',utility.auth,book_controller.get_future_lessons)
+router.get('/lesson',utility.auth,book_controller.get_future_lessons)
 
 module.exports=router
