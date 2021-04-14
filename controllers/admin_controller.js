@@ -20,9 +20,12 @@ module.exports={
 		for(var i in result){
 			var x=await admin.get_lessons_partecipants(result[i].id)
 			//creo un array relativo alla lezione
-			partecipants['lesson_'+x[0].lesson_id]=[]
-			for(var j in x){
-				partecipants['lesson_'+x[0].lesson_id].push({name:x[j].user_name,surname:x[j].user_surname})
+			
+			partecipants['lesson_'+result[i].id]=[]
+			if(x){
+				for(var j in x){
+					partecipants['lesson_'+x[0].lesson_id].push({name:x[j].user_name,surname:x[j].user_surname})
+				}
 			}
 		}
 		
@@ -157,8 +160,9 @@ module.exports={
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
 		var news=await user.get_future_news()
+		var all_news=await admin.get_all_news()
 
-		res.render("admin_news.ejs",{news})
+		res.render("admin_news.ejs",{news,all_news})
 	},
 
 	delete_news:async(req,res)=>{

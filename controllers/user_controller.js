@@ -32,7 +32,7 @@ module.exports={
 			}
 		}else
 		{
-			utility.json_response(res,400,{msg:'Parametri errati'})
+			utility.json_response(res,400,{msg:'Atleta non accettato'})
 		}
 	},
 

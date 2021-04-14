@@ -6,6 +6,8 @@ window.onload=()=>{
 
 	$('#news_update_btn').on('click',update_news)
 
+	$('.remove-btn').on('click',delete_news)
+
 	//update field di testo (materialize)
 	M.updateTextFields();
 
@@ -68,6 +70,25 @@ function update_news(){
 			expire_date:$('#expire_date_update_input').val(),
 			title:$('#title_update_input').val(),
 			content:$('#content_update_input').val()
+		},
+		success:(res)=>{
+			M.toast({html:res.msg})
+		},
+		error:(obj,status,err)=>{
+			console.log(obj)
+			M.toast({html:obj.responseJSON.msg})
+		}
+	})
+}
+
+function delete_news(){
+	var id=this.id
+	console.log(id)
+	$.ajax({
+		type:'delete',
+		url:'/news',
+		data:{
+			id
 		},
 		success:(res)=>{
 			M.toast({html:res.msg})

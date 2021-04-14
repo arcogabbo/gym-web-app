@@ -62,6 +62,23 @@
 				</div>
 			</li>
 		</ul>
+
+		<% if(all_news) { %>
+			<ul class="collapsible black-text grey lighten-2">
+				<% for(var i in all_news) { %>
+					<li>
+						<div class="collapsible-header">
+							<%= all_news[i].title %>
+						</div>
+						<div class="collapsible-body">
+							<%= all_news[i].content %>
+							<br>
+							<button id="<%= all_news[i].id %>" class="remove-btn btn-floating waves-light waves-effect red"><i class="material-icons">delete</i></button>
+						</div>
+					</li>
+				<% } %>
+			</ul>
+		<% } %>
 	</div>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>

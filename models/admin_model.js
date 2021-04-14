@@ -198,6 +198,16 @@ module.exports={
 		return null
 	},
 
+	get_all_news:async()=>{
+		var query="SELECT * FROM news"
+
+		var result=await db.query(query,[])
+
+		if(result)
+			return result
+		return null
+	},
+
 	delete_news:async(id)=>{
 		var query="DELETE FROM news WHERE id=?"
 	
