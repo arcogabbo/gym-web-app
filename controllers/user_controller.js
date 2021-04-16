@@ -157,15 +157,18 @@ module.exports={
 		let utente=await user.read_info_by_id(req.user.id)
 		
 		if(req.files){
-			//console.log(req.files)
 			var file = req.files.file;
+			//check sul size del file
+			console.log(file.size)
+			if(file.size >= (config.max_file_size_in_bytes)){
+				return utility.json_response(res,400,{msg:"Dimesnioni massime superate"})
+			}
 			var extension=file.name.split('.').pop()
 
 			var path=config.path_to_images+utente[0].id+"."+extension
 			file.mv(path,(err)=>{
 			    if (err) return utility.json_response(res,500,{msg:"Impossibile caricare l'immagine"})
 
-			    //refresh (da implementare i flash dopo)
 		    	utility.json_response(res,200,{msg:"Immagine caricata correttamente"})
 			})
 		}
