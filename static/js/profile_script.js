@@ -4,7 +4,6 @@ window.onload=()=>{
 	$('#save_des_btn').on('click',save_des)
 
 	$('#image-file').change(()=>{
-		console.log(this)
 		var size=$('#image-file').prop('files')[0].size/1024/1024
 		if(size>2.0){
 			//svuoto il file
@@ -33,13 +32,15 @@ window.onload=()=>{
 
 
 function save_changes(){
+	var id=$('#id_value').html()
+	console.log(id)
 	var file = $("#image-file")[0].files[0];
     var form_data = new FormData();
     form_data.append("file", file);
 
 	$.ajax({
 		type:'put',
-		url:'/user/pic',
+		url:'/user/'+id+'/pic',
 		data:form_data,
 		success:(res)=>{
 			console.log(res)
@@ -57,9 +58,10 @@ function save_changes(){
 }
 
 function save_des(){
+	var id=$('#id_value').html()
 	$.ajax({
 		type:'put',
-		url:'/user/des',
+		url:'/user/'+id+'/des',
 		data:{
 			description:$('#description-area').val()
 		},
@@ -75,9 +77,10 @@ function save_des(){
 }
 
 function update_pr(){
+	var id=$('#id_value').html()
 	$.ajax({
 		type:'put',
-		url:'/user/pr',
+		url:'/user/'+id+'/pr',
 		data:{
 			exercise_id:$("#pr_select option:selected").prop("value"),
 			value:$('#pr_add_number').val()

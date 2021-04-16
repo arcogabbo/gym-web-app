@@ -16,6 +16,12 @@ window.onload=()=>{
       startingTop:"20%",
       endingTop:"25%"
     });
+
+    //init sidebar for mobile devices
+    $('.sidenav').sidenav();
+	
+	//init fixed-btn
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left', hoverEnabled:false});
 }
 
 
@@ -62,13 +68,10 @@ function single_book(){
 }
 
 function remove_lesson(){
-	var id=this.id.split("_")[0]
+	var id=this.id
 	$.ajax({
 		type:'delete',
-		url:'/lesson',
-		data:{
-			id:id
-		},
+		url:'/lesson/'+id,
 		success:(res)=>{
 			console.log(res)
 			M.toast({html:res.msg})

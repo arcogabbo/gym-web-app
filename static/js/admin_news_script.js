@@ -16,6 +16,12 @@ window.onload=()=>{
 
   	//init text area counter
   	$('textarea').characterCounter();
+
+	//init sidebar for mobile devices
+    $('.sidenav').sidenav();
+	
+	//init fixed-btn
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left', hoverEnabled:false});  	
 }
 
 function add_news(){
@@ -42,10 +48,7 @@ function get_news(){
 
 	$.ajax({
 		type:'get',
-		url:'/news',
-		data:{
-			id
-		},
+		url:'/news/'+id,
 		success:(res)=>{
 			$('#expire_date_update_input').val(res.data[0].expire_date.split('T')[0])
 			$('#title_update_input').val(res.data[0].title)
@@ -64,9 +67,8 @@ function update_news(){
 	var id=$("#news_select option:selected").prop("value").split('_')[0]
 	$.ajax({
 		type:'put',
-		url:'/news',
+		url:'/news/'+id,
 		data:{
-			id,
 			expire_date:$('#expire_date_update_input').val(),
 			title:$('#title_update_input').val(),
 			content:$('#content_update_input').val()
@@ -86,10 +88,7 @@ function delete_news(){
 	console.log(id)
 	$.ajax({
 		type:'delete',
-		url:'/news',
-		data:{
-			id
-		},
+		url:'/news/'+id,
 		success:(res)=>{
 			M.toast({html:res.msg})
 		},

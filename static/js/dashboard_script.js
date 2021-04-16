@@ -11,14 +11,11 @@ window.onload=()=>{
 }
 
 function book(){
-	var lesson_id=this.id.split('_')[0]
+	var lesson_id=this.id
 
 	$.ajax({
 		type:'post',
-		url:'/book',
-		data:{
-			lesson_id
-		},
+		url:'/book/'+lesson_id,
 
 		success:(res)=>{
 			console.log(res)
@@ -37,10 +34,7 @@ function free_spot(){
 
 	$.ajax({
 		type:'delete',
-		url:'/book',
-		data:{
-			lesson_id
-		},
+		url:'/book/'+lesson_id,
 
 		success:(res)=>{
 			console.log(res)

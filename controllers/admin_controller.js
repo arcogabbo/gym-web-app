@@ -8,8 +8,10 @@ module.exports={
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
 		var result=await admin.get_to_accept()
+		var image=await utility.find_pic_by_id(req.user.id)
+		var news_count=await user.news_count()
 
-		res.render('admin_panel.ejs',{user:req.user, to_accept:result})
+		res.render('admin_panel.ejs',{user:req.user, to_accept:result,pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
 	admin_lessons:async(req,res)=>{
@@ -28,15 +30,17 @@ module.exports={
 				}
 			}
 		}
-		
-		res.render('admin_lessons.ejs',{lessons:result,partecipants})
+
+		var image=await utility.find_pic_by_id(req.user.id)
+		var news_count=await user.news_count()
+
+		res.render('admin_lessons.ejs',{lessons:result,partecipants,user:req.user, pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
 	accept_user:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
-		const params=utility.get_parameters(req)
 
-		var result=await admin.accept_user(params.id)
+		var result=await admin.accept_user(req.params.id)
 
 		if(result){
 			utility.json_response(res,200,{msg:"Utente accettato correttamente"})
@@ -53,7 +57,7 @@ module.exports={
 			case "multiple":
 				var result = await admin.multiple_book(params.capacity,params.initial_timestamp)
 				if(result){
-					utility.json_response(res,200,{msg:"Lezioni aggiunte correttamente"})
+					utility.json_response(res,200,{msg:"Lezioni aggiunte correttamente",ids:result})
 				}else{
 					utility.json_response(res,500,{msg:"Errore inserimento lezioni"})
 				}
@@ -61,7 +65,7 @@ module.exports={
 			case "single":
 				var result = await admin.single_book(params.capacity,params.initial_timestamp)
 				if(result){
-					utility.json_response(res,200,{msg:"Lezioni aggiunte correttamente"})
+					utility.json_response(res,200,{msg:"Lezioni aggiunte correttamente",id:result})
 				}else{
 					utility.json_response(res,500,{msg:"Errore inserimento lezioni"})
 				}
@@ -74,12 +78,11 @@ module.exports={
 
 	delete_lesson:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
-		const params=utility.get_parameters(req)
 
-		var result=await admin.delete_lesson(params.id)
+		var result=await admin.delete_lesson(req.params.id)
 
 		if(result){
-			await admin.delete_books_on_lesson(params.id)
+			await admin.delete_books_on_lesson(req.params.id)
 			utility.json_response(res,200,{msg:"Lezione rimossa correttamente"})
 		}else{
 			utility.json_response(res,500,{msg:"Errore rimozione lezione"})
@@ -104,7 +107,9 @@ module.exports={
 		var certificates=await admin.get_certificates()
 		var users=await admin.get_users()
 
-		res.render('admin_certificates.ejs',{certificates,users})
+		var image=await utility.find_pic_by_id(req.user.id)
+		var news_count=await user.news_count()
+		res.render('admin_certificates.ejs',{certificates,users,user:req.user, pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
 	update_certificates:async(req,res)=>{
@@ -115,7 +120,7 @@ module.exports={
 		var certificates=await admin.get_certificates()
 		var to_update=false
 		for(var i in certificates){
-			if(certificates[i].id==params.id){
+			if(certificates[i].id==req.params.id){
 				to_update=true
 				break
 			}
@@ -123,7 +128,7 @@ module.exports={
 
 		switch(params.type){
 			case 'certificate':
-				var result=to_update ? await admin.update_certificate(params.date,params.id) : await admin.create_certificate(params.date,params.id)
+				var result=to_update ? await admin.update_certificate(params.date,req.params.id) : await admin.create_certificate(params.date,req.params.id)
 				if(result){
 					utility.json_response(res,200,{msg:"Certificato aggiunto correttamente"})
 				}else{
@@ -131,7 +136,7 @@ module.exports={
 				}
 				break
 			case 'subscription':
-				var result=to_update ? await admin.update_subscription(params.date,params.id) : await admin.create_subscription(params.date,params.id)
+				var result=to_update ? await admin.update_subscription(params.date,req.params.id) : await admin.create_subscription(params.date,req.params.id)
 				if(result){
 					utility.json_response(res,200,{msg:"Abbonamento aggiunto correttamente"})
 				}else{
@@ -145,9 +150,8 @@ module.exports={
 
 	delete_certificates:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
-		const params=utility.get_parameters(req)
 		
-		var result=await admin.delete_certificates(params.id)
+		var result=await admin.delete_certificates(req.params.id)
 
 		if(result){
 			utility.json_response(res,200,{msg:"Certificati rimossi correttamente"})
@@ -162,14 +166,16 @@ module.exports={
 		var news=await user.get_future_news()
 		var all_news=await admin.get_all_news()
 
-		res.render("admin_news.ejs",{news,all_news})
+		var image=await utility.find_pic_by_id(req.user.id)
+		var news_count=await user.news_count()
+
+		res.render("admin_news.ejs",{news,all_news,user:req.user, pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
 	delete_news:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
-		const params=utility.get_parameters(req)
 		
-		var result=await admin.delete_news(params.id)
+		var result=await admin.delete_news(req.params.id)
 		if(result){
 			utility.json_response(res,200,{msg:"Notizia rimossa correttamente"})
 		}else{
@@ -183,7 +189,7 @@ module.exports={
 		
 		var result=await admin.insert_news(params.expire_date,params.title,params.content)
 		if(result){
-			utility.json_response(res,200,{msg:"Notizia aggiunta correttamente"})
+			utility.json_response(res,200,{msg:"Notizia aggiunta correttamente",id:result})
 		}else{
 			utility.json_response(res,500,{msg:"Errore aggiunta notizia"})
 		}
@@ -194,13 +200,13 @@ module.exports={
 		const params=utility.get_parameters(req)
 
 		if(params.title != null){
-			var result1=await admin.update_news_title(params.id,params.title)
+			var result1=await admin.update_news_title(req.params.id,params.title)
 		}
 		if(params.expire_date != null){
-			var result2=await admin.update_news_date(params.id,params.expire_date)
+			var result2=await admin.update_news_date(req.params.id,params.expire_date)
 		}
 		if(params.content != null){
-			var result3=await admin.update_news_content(params.id,params.content)
+			var result3=await admin.update_news_content(req.params.id,params.content)
 		}
 
 		if(result1 || result2 || result3){

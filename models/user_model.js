@@ -13,6 +13,17 @@ module.exports={
 		return false
 	},
 
+	exist_by_mail:async(mail)=>{
+		var query="SELECT * FROM users WHERE mail=?"
+
+		var result=await db.query(query,[mail])
+
+		if(result){
+			return result
+		}
+		return false
+	},
+
 	read_info_by_mail:async (mail)=>{
 		var query="SELECT users.*,descriptions.description FROM users LEFT JOIN descriptions ON users.id=descriptions.user_id WHERE users.mail=? AND is_accepted=1"
 		var result=await db.query(query,[mail])
@@ -48,7 +59,7 @@ module.exports={
 			var digest=await promessa
 			var result=db.query(query,[mail,name,surname,digest,gender])
 
-			return result
+			return result.insertId
 		}catch(er){
 			console.log(er)
 			return false

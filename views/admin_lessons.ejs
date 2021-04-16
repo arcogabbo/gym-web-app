@@ -10,6 +10,9 @@
 	<script src="/js/admin_lessons_script.js" type="text/javascript"></script>
 </head>
 <body>
+
+	<%- include ('bar.ejs') %>
+
 	<div class="container">
 	<!-- COLLAPSIBLE -->
 	<ul class="collapsible black-text grey lighten-2">
@@ -66,8 +69,8 @@
 						<td><%= lessons[i].date %></td>
 						<td><%= lessons[i].time %></td>
 						<td><%= lessons[i].capacity %></td>
-						<td><a class="btn waves-effect waves-light modal-trigger deep-orange darken-3" href="#modal<%= lessons[i].id %>">Mostra</a></td>
-						<td><button id="<%= lessons[i].id %>_remove" class="remove-btn btn waves-effect waves-light deep-orange darken-3">Rimuovi</button></td>
+						<td><a class="btn waves-effect waves-light modal-trigger deep-orange darken-3" href="#modal<%= lessons[i].id %>"><i class="material-icons">info_outline</i></a></td>
+						<td><button id="<%= lessons[i].id %>" class="remove-btn btn waves-effect waves-light deep-orange darken-3"><i class="material-icons">delete</i></button></td>
 					</tr>
 				<% } %>
 				<% } %>
@@ -86,6 +89,8 @@
 	    </div>
   		</div>
 	<% } %>
+
+	<%- include ('admin_button.ejs') %>
 
 	<script type="text/javascript" src="/js/materialize.min.js"></script>
 </body>

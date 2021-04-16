@@ -10,17 +10,22 @@ window.onload=()=>{
 
 	//init collapsible
 	$('.collapsible').collapsible()
+
+	//init sidebar for mobile devices
+    $('.sidenav').sidenav();
+	
+	//init fixed-btn
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left', hoverEnabled:false});
 }
 
 function add_certificate(){
 	var user=$("#certificate_select option:selected").prop("value").split('_')
 	$.ajax({
 		type:'put',
-		url:'/certificate',
+		url:'/certificates/'+user[0],
 		data:{
 			type:'certificate',
-			date:$('#certificate_input').val(),
-			id:user[0]
+			date:$('#certificate_input').val()
 		},
 		success:(res)=>{
 			console.log(res)
@@ -37,11 +42,10 @@ function add_subscription(){
 	var user=$("#subscription_select option:selected").prop("value").split('_')
 	$.ajax({
 		type:'put',
-		url:'/certificate',
+		url:'/certificates/'+user[0],
 		data:{
 			type:'subscription',
-			date:$('#subscription_input').val(),
-			id:user[0]
+			date:$('#subscription_input').val()
 		},
 		success:(res)=>{
 			console.log(res)
@@ -55,13 +59,10 @@ function add_subscription(){
 }
 
 function remove_certificates(){
-	var id=$(this).prop("id").split("_")[0]
+	var id=this.id
 	$.ajax({
 		type:'delete',
-		url:'/certificate',
-		data:{
-			id
-		},
+		url:'/certificates/'+id,
 		success:(res)=>{
 			console.log(res)
 			M.toast({html:res.msg})

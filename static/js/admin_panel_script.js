@@ -1,17 +1,19 @@
 window.onload=()=>{
 	$('.accept-btn').on('click',accept)
+
+	//init sidebar for mobile devices
+    $('.sidenav').sidenav();
+	
+	//init fixed-btn
+    var instances = M.FloatingActionButton.init($('.fixed-action-btn'),{direction:'left', hoverEnabled:false});
 }
 
 function accept(){
-	var id=this.id.split("_")[0]
+	var id=this.id
 
 	$.ajax({
 		type:'put',
-		url:'/user',
-		data:{
-			id:id
-		},
-
+		url:'/user/'+id,
 		success:(res)=>{
 			console.log(res)
 			M.toast({html:res.msg})

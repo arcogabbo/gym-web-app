@@ -64,7 +64,7 @@ module.exports={
 		var result4=await db.query(query4,[capacity,initial_timestamp])
 
 		if(result1 && result2 && result3 &&result4)
-			return (result1.affectedRows +result2.affectedRows+result3.affectedRows+result4.affectedRows)
+			return [result1.insertId,result2.insertId,result3.insertId,result4.insertId]
 		return null
 	},
 
@@ -74,7 +74,7 @@ module.exports={
 		var result=await db.query(query,[capacity,initial_timestamp])
 
 		if(result)
-			return result
+			return result.insertId
 		return null
 	},
 
@@ -119,7 +119,7 @@ module.exports={
 	},
 
 	get_certificates:async()=>{
-		var query="SELECT users.name, users.surname, DATE_FORMAT(certificates.certificate, '%d-%m-%Y') as certificate, DATE_FORMAT(certificates.subscription, '%d-%m-%Y') as subscription, users.id FROM certificates INNER JOIN users ON certificates.user_id=users.id"
+		var query="SELECT users.name, users.surname, DATE_FORMAT(certificates.certificate, '%d-%m-%y') as certificate, DATE_FORMAT(certificates.subscription, '%d-%m-%y') as subscription, users.id FROM certificates INNER JOIN users ON certificates.user_id=users.id"
 		
 		var result=await db.query(query,[])
 
@@ -194,7 +194,7 @@ module.exports={
 		var result=await db.query(query,[expire_date,title,content])
 
 		if(result)
-			return result
+			return result.insertId
 		return null
 	},
 

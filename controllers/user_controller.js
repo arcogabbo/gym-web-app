@@ -38,51 +38,21 @@ module.exports={
 
 	create_user:async(req,res)=>{
 		var params=utility.get_parameters(req)
-		var utente=await user.read_by_mail(params.mail)
+		var utente=await user.exist_by_mail(params.mail)
 		
 		//se l'utente esiste già
 		if(utente){
-			utility.json_response(res,409,{msg:'mail già usata'})
+			utility.json_response(res,409,{msg:'Mail già usata'})
 		}else{
 			//procedo con la registrazione
 			var result=await user.create(params.mail,params.name,params.surname,params.password,params.gender)
 			if(result){
 				//registrazione avvenuta senza errori
-				utility.json_response(res,200,{msg:'registrazione avvenuta'})
+				//ritorno l'id dell'utente appena creato
+				utility.json_response(res,200,{msg:'Registrazione avvenuta',id:result})
 			}else{
 				utility.json_response(res,500,{msg:'Errore registrazione'})
 			}
-		}
-	},
-
-	get_profile_by_mail:async(req,res)=>{
-		var params=utility.get_parameters(req)
-		var utente=await user.read_info_by_mail(params.mail)
-
-		let file=await utility.find_pic_by_id(utente[0].id)
-
-		var exercises=await user.get_exercises()
-		if(utente){
-			var prs=await user.get_prs_by_id(utente[0].id)
-			var profile_img=await utility.find_pic_by_id(req.user.id)
-			var news_count=await user.news_count()
-			var obj={
-				requested:{
-					name:utente[0].name,
-					id:utente[0].id,
-					surname:utente[0].surname,
-					description:utente[0].description,
-					file_info:file ? file : {name:"default",extension:"png"}
-				},
-				prs,
-				exercises,
-				user:req.user,
-				pic: profile_img?profile_img.name+"."+profile_img.extension:"default.png",
-				news_count
-			}
-			res.render('profile.ejs',obj)
-		}else{
-			utility.json_response(res,404,{msg:'Utente inesistente'})
 		}
 	},
 
@@ -117,11 +87,9 @@ module.exports={
 	},
 
 	get_profile_info:async(req,res)=>{
-		const params=utility.get_parameters(req)
-
-		if(params.id){
-			var utente=await user.read_info_by_id(params.id)
-			var pic=await utility.find_pic_by_id(params.id)
+		if(req.params.id){
+			var utente=await user.read_info_by_id(req.params.id)
+			var pic=await utility.find_pic_by_id(req.params.id)
 			var prs=await user.get_prs_by_id(utente[0].id)
 			var obj={
 				utente:{
@@ -140,9 +108,7 @@ module.exports={
 	},
 
 	get_des:async(req,res)=>{
-		const params=utility.get_parameters(req)
-
-		var result=await user.get_description_by_id(params.id)
+		var result=await user.get_description_by_id(req.params.id)
 
 		if(result){
 			utility.json_response(res,200,{data:result})
@@ -153,7 +119,6 @@ module.exports={
 
 	update_des:async(req,res)=>{
 		const params=utility.get_parameters(req)
-
 
 		let result=await user.get_description_by_id(req.user.id)
 
@@ -168,10 +133,8 @@ module.exports={
 	},
 
 	get_pic:async(req,res)=>{
-		const params=utility.get_parameters(req)
-
-		if(params.id){
-			var file_info=await utility.find_pic_by_id(params.id)
+		if(req.params.id){
+			var file_info=await utility.find_pic_by_id(req.params.id)
 
 			utility.json_response(res,200,{data:file_info?'/images/'+file_info.name+'.'+file_info.extension:"/images/default.png"})
 		}else{
@@ -180,10 +143,13 @@ module.exports={
 	},
 
 	update_pic:async(req,res)=>{
-		//elimino la pic precedente se esistente
+		//se l'utente nel link non è uguale all'utente in sessione
+		//ovvero controllo se si è i proprietari del profilo
+		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		
 		var file_info=await utility.find_pic_by_id(req.user.id)
 		var flag=false
-
+		//elimino la pic precedente se esistente
 		if(file_info)
 			flag=utility.delete_pic_by_path(file_info)
 		
@@ -208,7 +174,7 @@ module.exports={
 	get_pr:async(req,res)=>{
 		const params=utility.get_parameters(req)
 
-		var prs=await user.get_user_prs_by_exercise_id(params.id,params.exercise_id)
+		var prs=await user.get_user_prs_by_exercise_id(req.params.id,params.exercise_id)
 
 		if(prs){
 			utility.json_response(res,200,{data:prs})
@@ -218,6 +184,7 @@ module.exports={
 	},
 
 	update_pr:async(req,res)=>{
+		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 
 		//controllo se l'utente ha già inserito il pr di quell'esercizio
@@ -243,9 +210,8 @@ module.exports={
 	},
 
 	get_news:async(req,res)=>{
-		const params=utility.get_parameters(req)
-		if(params.id){
-			var result=await user.get_news_by_id(params.id)
+		if(req.params.id){
+			var result=await user.get_news_by_id(req.params.id)
 
 			if(result){
 				utility.json_response(res,200,{data:result})
@@ -253,17 +219,23 @@ module.exports={
 				utility.json_response(res,500,{msg:"Errore fetch delle news"})
 			}
 		}else{
-			var result=await user.get_future_news()
+			utility.json_response(res,400,{msg:"Parametri errati"})
+		}
+	},
 
-			if(result){
-				utility.json_response(res,200,{data:result})
-			}else{
-				utility.json_response(res,500,{msg:"Errore fetch delle news"})
-			}
+	get_all_news:async(req,res)=>{
+		var result=await user.get_future_news()
+
+		if(result){
+			utility.json_response(res,200,{data:result})
+		}else{
+			utility.json_response(res,500,{msg:"Errore fetch delle news"})
 		}
 	},
 
 	get_diary:async(req,res)=>{
+		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
+		
 		const params=utility.get_parameters(req)
 
 		if(params.lesson_id){
@@ -286,6 +258,8 @@ module.exports={
 	},
 
 	update_diary:async(req,res)=>{
+		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
+
 		const params=utility.get_parameters(req)
 		//controllo se l'utente aveva gia' una entry per quella lezione
 		var result=await user.get_lesson_diary(params.lesson_id,req.user.id)
@@ -311,7 +285,9 @@ module.exports={
 		}
 	},
 
-	delete_diary:async(req,res)=>{
+	delete_diary_page:async(req,res)=>{
+		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
+
 		const params=utility.get_parameters(req)
 		if(params.lesson_id){
 			var result=await user.delete_diary(params.lesson_id,req.user.id)

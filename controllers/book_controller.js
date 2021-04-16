@@ -6,11 +6,11 @@ module.exports={
 		const params=utility.get_parameters(req)
 
 		//prima controllo se la lezione esiste
-		var l=await book.get_lesson_capacity(params.lesson_id)
+		var l=await book.get_lesson_capacity(req.params.lesson_id)
 		if(!l) return utility.json_response(res,404,{msg:"La lezione non esiste"})
 
 		//ottengo la data della lezione a cui si vuole registrare
-		var les=await book.get_lesson(params.lesson_id)
+		var les=await book.get_lesson(req.params.lesson_id)
 
 		//un utente non puo' prenotarsi a due lezioni lo stesso giorno
 		//il primo controllo da fare e' vedere se l'utente e' gia' prenotato
@@ -24,13 +24,13 @@ module.exports={
 			//continuo con la prenotazione
 			//trovo id e nome sulla sessione
 			//prima controllo se ci sono posti liberi per poter prenotare
-			var result=await book.get_lesson_capacity(params.lesson_id)
+			var result=await book.get_lesson_capacity(req.params.lesson_id)
 
 			if( result[0].capacity > result[0].n_books ){
-				var pren=await book.insert_book(params.lesson_id,req.user.id,req.user.name,req.user.surname)
+				var pren=await book.insert_book(req.params.lesson_id,req.user.id,req.user.name,req.user.surname)
 
 				if(pren){
-					await book.add_book_on_lesson(params.lesson_id)
+					await book.add_book_on_lesson(req.params.lesson_id)
 					utility.json_response(res,200,{msg:"Prenotazione avvenuta con successo"})
 				}else{
 					utility.json_response(res,500,{msg:"Errore prenotazione"})
@@ -42,18 +42,16 @@ module.exports={
 	},
 
 	delete_book:async(req,res)=>{
-		const params=utility.get_parameters(req)
-		
 		//controllo esistenza lezione
-		var l=await book.get_lesson_capacity(params.lesson_id)
+		var l=await book.get_lesson_capacity(req.params.lesson_id)
 		if(!l) return utility.json_response(res,404,{msg:"La lezione non esiste"})
 
 		//rimuovo la prenotazione
-		var result=await book.delete_book(params.lesson_id,req.user.id)
+		var result=await book.delete_book(req.params.lesson_id,req.user.id)
 
 		if(result){
 			//scalo il numero di prenotati
-			await book.subtract_book_from_lesson(params.lesson_id)
+			await book.subtract_book_from_lesson(req.params.lesson_id)
 			utility.json_response(res,200,{msg:"Rimozione prenotazione avvenuta"})
 		}else{
 			utility.json_response(res,500,{msg:"Non sei prenotato a questa lezione"})
@@ -61,25 +59,22 @@ module.exports={
 	},
 
 	get_future_lessons:async(req,res)=>{
-		const params=utility.get_parameters(req)
+		var lessons=await book.get_future_lessons()
 
-		if(params.id){
-			var lesson=await book.get_lesson(params.id)
-
-			if(lesson){
-				utility.json_response(res,200,{data:lesson})
-			}else{
-				utility.json_response(res,404,{msg:"Lezione non trovata"})
-			}
-
+		if(lessons){
+			utility.json_response(res,200,{data:lessons})
 		}else{
-			var lessons=await book.get_future_lessons()
+			utility.json_response(res,500,{msg:"Errore caricamento lezioni"})
+		}
+	},
 
-			if(lessons){
-				utility.json_response(res,200,{data:lessons})
-			}else{
-				utility.json_response(res,500,{msg:"Errore caricamento lezioni"})
-			}
+	get_lesson:async(req,res)=>{
+		var lesson=await book.get_lesson(req.params.id)
+
+		if(lesson){
+			utility.json_response(res,200,{data:lesson})
+		}else{
+			utility.json_response(res,404,{msg:"Lezione non trovata"})
 		}
 	}
 }
