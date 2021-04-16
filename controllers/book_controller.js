@@ -69,7 +69,7 @@ module.exports={
 	},
 
 	get_lesson:async(req,res)=>{
-		var lesson=await book.get_lesson(req.params.id)
+		var lesson=await book.get_lesson(req.params.lesson_id)
 
 		if(lesson){
 			utility.json_response(res,200,{data:lesson})
