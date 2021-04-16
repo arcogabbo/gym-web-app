@@ -147,6 +147,11 @@ module.exports={
 		//ovvero controllo se si è i proprietari del profilo
 		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
+		//check sul size del file
+		if(req.files.file.size >= (config.max_file_size_in_bytes)){
+			return utility.json_response(res,400,{msg:"Dimensioni massime superate"})
+		}
+
 		var file_info=await utility.find_pic_by_id(req.user.id)
 		var flag=false
 		//elimino la pic precedente se esistente
@@ -158,11 +163,7 @@ module.exports={
 		
 		if(req.files){
 			var file = req.files.file;
-			//check sul size del file
-			console.log(file.size)
-			if(file.size >= (config.max_file_size_in_bytes)){
-				return utility.json_response(res,400,{msg:"Dimesnioni massime superate"})
-			}
+			
 			var extension=file.name.split('.').pop()
 
 			var path=config.path_to_images+utente[0].id+"."+extension
