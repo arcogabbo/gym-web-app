@@ -17,8 +17,6 @@
 	<div class="container">
 		<img class="center-align profile-picture responsive-img circle" src="/images/<%= requested.file_info.name %>.<%= requested.file_info.extension %>" alt="Foto profilo">
 	</div>
-	<span class="flow-text">Id:</span>
-	<span id="id_value" class="flow-text"><%= requested.id %></span>
 	<h2 class="flow-text"><%= requested.name%> <%= requested.surname%></h2>
 	<% if (user.id == requested.id) { %>
 		<div id="settings-box" class="input-field">

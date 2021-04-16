@@ -32,7 +32,7 @@ window.onload=()=>{
 
 
 function save_changes(){
-	var id=$('#id_value').html()
+	var id=$('.id').html()
 	console.log(id)
 	var file = $("#image-file")[0].files[0];
     var form_data = new FormData();
@@ -58,7 +58,7 @@ function save_changes(){
 }
 
 function save_des(){
-	var id=$('#id_value').html()
+	var id=$('.id').html()
 	$.ajax({
 		type:'put',
 		url:'/user/'+id+'/des',
@@ -77,7 +77,7 @@ function save_des(){
 }
 
 function update_pr(){
-	var id=$('#id_value').html()
+	var id=$('.id').html()
 	$.ajax({
 		type:'put',
 		url:'/user/'+id+'/pr',
