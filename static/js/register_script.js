@@ -24,9 +24,10 @@ function register(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			if(obj.responseJSON.errors){
+				for(var i in obj.responseJSON.errors)
+					M.toast({html:obj.responseJSON.errors[i].msg})
+			}
 		}
 	})
 }
-
-//da aggiungere i controlli sui campi

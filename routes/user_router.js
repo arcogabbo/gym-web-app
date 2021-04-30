@@ -5,10 +5,19 @@ const user_controller=require('../controllers/user_controller.js')
 const express=require('express')
 const utility=require('../utility/utility.js')
 const router=express.Router()
+const { check, validationResult } = require('express-validator');
 
 router.post('/login',user_controller.create_session)
 
-router.post('/user',user_controller.create_user)
+router.post('/user',
+	// check mail
+  	check('mail','Email errata').isEmail(),
+  	// password deve essere lunga minimo 4 caratteri
+  	check('password','La password deve essere formata da almeno 4 caratteri').isLength({ min: 4 }),
+  	check('name','Il nome deve essere inserito').notEmpty(),
+  	check('surname','Il cognome deve essere inserito').notEmpty(),
+  	check('gender','Parametro errato').custom((value) => value >= 0 && value <= 1),
+  	user_controller.create_user)
 
 //il middleware auth controlla che l'utente sia loggato
 //prima di soddisfare la richiesta

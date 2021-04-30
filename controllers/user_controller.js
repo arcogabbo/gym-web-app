@@ -1,6 +1,7 @@
 const user=require('../models/user_model.js')
 const utility=require('../utility/utility.js')
 const config=require('../utility/config.js')
+const { validationResult } = require('express-validator');
 
 module.exports={
 	create_session:async(req,res)=>{
@@ -37,6 +38,12 @@ module.exports={
 	},
 
 	create_user:async(req,res)=>{
+		//check errore validazione
+		var errors = validationResult(req);
+	    if (!errors.isEmpty()) {
+	      return utility.json_response(res,400,{ msg:"Errore nei parametri", errors: errors.array() });
+	    }
+
 		var params=utility.get_parameters(req)
 		var utente=await user.exist_by_mail(params.mail)
 		
