@@ -1,3 +1,5 @@
+//OPERAZIONI BASE SUI DATI PER LE PRENOTAZIONI
+
 const db=require('./db.js')
 
 module.exports={

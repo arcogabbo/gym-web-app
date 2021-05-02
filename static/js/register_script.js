@@ -1,4 +1,5 @@
 window.onload=()=>{
+	//aggiunta evento
 	$('#register_btn').on('click',register)
 
 	//update field di testo (materialize)
@@ -23,6 +24,7 @@ function register(){
 			window.open('/dashboard','_self')
 		},
 		error:(obj,status,err)=>{
+			//print degli errori di validazione in console e sul client
 			console.log(obj)
 			if(obj.responseJSON.errors){
 				for(var i in obj.responseJSON.errors)

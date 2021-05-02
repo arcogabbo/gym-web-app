@@ -11,12 +11,14 @@ const PORT=8000
 //STATIC CONTENT
 
 app.use(express.static('static'))
+
+//RENDERING ENGINE
 app.set('view engine', 'ejs')
-app.use(cookie_parser())
-app.use(file_upload())
 
 //MIDDLEWARE
 
+app.use(cookie_parser())
+app.use(file_upload())
 app.use(require('body-parser').json()) //support to json
 app.use(require('body-parser').urlencoded({ extended: true })) // support encoded bodies)
 
@@ -37,9 +39,6 @@ app.use((req,res,next)=>{
 
 app.listen(PORT,() => {
 		console.log("in ascolto")
-		//mi connetto solo una volta
-		//con la pool la prima query si connettera' al db automaticamente
-		//db.connect()
 	}
 )
 

@@ -1,7 +1,9 @@
 window.onload=()=>{
+	//aggiunta eventi
 	$('#login_btn').on('click',login)
 
 	$('#register_btn').on('click',()=>{
+		//semplice redirect
 		window.open('/register','_self')
 	})
 

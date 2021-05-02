@@ -11,6 +11,7 @@ module.exports={
 		var image=await utility.find_pic_by_id(req.user.id)
 		var news_count=await user.news_count()
 
+		//renderizzo attraverso ejs
 		res.render('admin_panel.ejs',{user:req.user, to_accept:result,pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
@@ -19,6 +20,7 @@ module.exports={
 
 		var result=await admin.get_lessons()
 		var partecipants={}
+		//per ogni lezione futura ottengo i partecipanti
 		for(var i in result){
 			var x=await admin.get_lessons_partecipants(result[i].id)
 			//creo un array relativo alla lezione
@@ -34,6 +36,7 @@ module.exports={
 		var image=await utility.find_pic_by_id(req.user.id)
 		var news_count=await user.news_count()
 
+		//render
 		res.render('admin_lessons.ejs',{lessons:result,partecipants,user:req.user, pic: image?image.name+"."+image.extension:"default.png",news_count})
 	},
 
@@ -53,6 +56,7 @@ module.exports={
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 
+		//switch in base al type passato come parametro per capire l'azione da intraprendere
 		switch(params.type){
 			case "multiple":
 				var result = await admin.multiple_book(params.capacity,params.initial_timestamp)
@@ -116,7 +120,7 @@ module.exports={
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)
 		//controllo se l'utente al quale si vuole inserire l'abbonamento abbia
-		//gia' il record sul db
+		//gia' la entry sul db
 		var certificates=await admin.get_certificates()
 		var to_update=false
 		for(var i in certificates){
@@ -148,6 +152,7 @@ module.exports={
 		}
 	},
 
+	//elimino tutti i certificati di uno specifico utente
 	delete_certificates:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
@@ -195,6 +200,7 @@ module.exports={
 		}
 	},
 
+	//update di una news(possibile fare l'update di tutte le componenti o alcune scelte)
 	update_news:async(req,res)=>{
 		if(!req.user.is_admin) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		const params=utility.get_parameters(req)

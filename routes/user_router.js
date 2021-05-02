@@ -1,5 +1,4 @@
-//NOTA: il delete della sessione verrà fatto lato client visto che il jwt
-//è immagazzinato nel browser del client come cookie
+//ROUTER RELATIVO ALLE AZIONI CHE L'UTENTE PUO' SVOLGERE
 
 const user_controller=require('../controllers/user_controller.js')
 const express=require('express')

@@ -1,5 +1,5 @@
 window.onload=()=>{
-
+	//aggiunta eventi
 	$('#news_add_btn').on('click',add_news)
 
 	$('select').on('change',get_news)

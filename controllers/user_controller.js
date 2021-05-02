@@ -4,6 +4,7 @@ const config=require('../utility/config.js')
 const { validationResult } = require('express-validator');
 
 module.exports={
+	//creo la sessione quando viene fatto un login
 	create_session:async(req,res)=>{
 		var params=utility.get_parameters(req)
 		var utente=await user.read_by_mail(params.mail)
@@ -11,7 +12,7 @@ module.exports={
 		if(utente)
 		{
 			//procedo con il check della password
-			//utente[0].password contiene l'hash della password
+			//utente[0].password contiene l'hash della password(digest)
 			var flag=await user.validate_user(params.password,utente[0].password)
 			if(flag){
 				//log-in corretto, creo il token e lo ritorno
@@ -38,7 +39,7 @@ module.exports={
 	},
 
 	create_user:async(req,res)=>{
-		//check errore validazione
+		//check errore validazione parametri
 		var errors = validationResult(req);
 	    if (!errors.isEmpty()) {
 	      return utility.json_response(res,400,{ msg:"Errore nei parametri", errors: errors.array() });
@@ -63,11 +64,15 @@ module.exports={
 		}
 	},
 
+	//funzione sfruttata lato client
 	get_profile_by_id:async(req,res)=>{
+		//ottengo l'utente tramite id
 		var utente=await user.read_info_by_id(req.params.id)
 
+		//ottengo la sua immagine di profilo
 		let file=await utility.find_pic_by_id(req.params.id)
 		
+		//ottengo gli esercizi da mostrare
 		var exercises=await user.get_exercises()
 		if(utente){
 			var prs=await user.get_prs_by_id(utente[0].id)
@@ -87,12 +92,14 @@ module.exports={
 				pic: profile_img?profile_img.name+"."+profile_img.extension:"default.png",
 				news_count
 			}
+			//render
 			res.render('profile.ejs',obj)
 		}else{
 			utility.json_response(res,404,{msg:'Utente inesistente'})
 		}
 	},
 
+	//funzione sfruttata lato servizio
 	get_profile_info:async(req,res)=>{
 		if(req.params.id){
 			var utente=await user.read_info_by_id(req.params.id)
@@ -150,7 +157,7 @@ module.exports={
 	},
 
 	update_pic:async(req,res)=>{
-		//se l'utente nel link non è uguale all'utente in sessione
+		//check se l'utente nel link non è uguale all'utente in sessione
 		//ovvero controllo se si è i proprietari del profilo
 		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
 		
@@ -165,7 +172,7 @@ module.exports={
 		if(file_info)
 			flag=utility.delete_pic_by_path(file_info)
 		
-		//prendo l'id dalla sessione
+		//ottengo le info tramite user id
 		let utente=await user.read_info_by_id(req.user.id)
 		
 		if(req.files){
@@ -174,6 +181,7 @@ module.exports={
 			var extension=file.name.split('.').pop()
 
 			var path=config.path_to_images+utente[0].id+"."+extension
+			//sposto l'immagine nella cartella apposita
 			file.mv(path,(err)=>{
 			    if (err) return utility.json_response(res,500,{msg:"Impossibile caricare l'immagine"})
 
@@ -269,6 +277,7 @@ module.exports={
 	},
 
 	update_diary:async(req,res)=>{
+		//check perchè posso aggiornare solo una pagina di mia appartenenza
 		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
 
 		const params=utility.get_parameters(req)
@@ -297,6 +306,7 @@ module.exports={
 	},
 
 	delete_diary_page:async(req,res)=>{
+		//check perchè posso eliminare solo una pagina di mia appartenenza
 		if(req.user.id != req.params.id) return utility.json_response(res,401,{msg:"Non autorizzato"})
 
 		const params=utility.get_parameters(req)

@@ -1,4 +1,5 @@
 window.onload=()=>{
+	//aggiunta eventi
 	$('.book-btn').on('click',book)
 
 	$('.remove-btn').on('click',free_spot)

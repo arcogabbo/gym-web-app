@@ -1,4 +1,5 @@
 window.onload=()=>{
+	//aggiunta eventi
 	$('#book_assurance_btn').on('click',multiple_books)
 
 	$('#book_single_btn').on('click',single_book)

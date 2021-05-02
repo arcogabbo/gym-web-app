@@ -1,44 +1,12 @@
 const db=require('./db.js')
 
 module.exports={
-	is_admin:async(id)=>{
-		var query="SELECT is_admin FROM users WHERE id=?"
-		var result=await db.query(query,[id])
-
-		if(result){
-			return result[0].is_admin ? true : false
-		}
-
-		return false
-	},
-
-	is_accepted:async(id)=>{
-		var query="SELECT is_accepted FROM users WHERE id=?"
-		var result=await db.query(query,[id])
-
-		if(result){
-			return result[0].is_accepted ? true : false
-		}
-
-		return false
-	},
-
 	accept_user:async(id)=>{
 		var query="UPDATE users SET is_accepted=1 WHERE id=?"
 		var result=await db.query(query,[id])
 
 		if(result){
 			return result.affectedRows
-		}
-		return false
-	},
-
-	accept_admin:async(id)=>{
-		var query="UPDATE users SET is_admin=1 WHERE id=?"
-		var result=await db.query(query,[id])
-
-		if(result){
-			return result
 		}
 		return false
 	},
@@ -52,6 +20,7 @@ module.exports={
 		return null
 	},
 
+	//inserisco delle lezioni della durata di un'ora per un mese(partendo dal giorno inserito)
 	multiple_book:async(capacity,initial_timestamp)=>{
 		var query="INSERT INTO lessons (capacity,start_date,end_date) VALUES(?,?,DATE_ADD(start_date, INTERVAL 1 HOUR))"
 		var query2="INSERT INTO lessons (capacity,start_date,end_date) VALUES(?,DATE_ADD(?,INTERVAL 7 DAY),DATE_ADD(start_date, INTERVAL 1 HOUR))"
@@ -68,6 +37,7 @@ module.exports={
 		return null
 	},
 
+	//inserisco una sola lezione dalla durata di un'ora
 	single_book:async(capacity,initial_timestamp)=>{
 		var query="INSERT INTO lessons (capacity,start_date,end_date) VALUES(?,?,DATE_ADD(start_date, INTERVAL 1 HOUR))"
 		
@@ -78,6 +48,7 @@ module.exports={
 		return null
 	},
 
+	//ottieni tutte le lezioni(anche quelle imminenti)
 	get_lessons:async()=>{
 		var query="SELECT DATE_FORMAT(start_date, '%d/%m') AS date,DATE_FORMAT(start_date, '%H:%i') AS time,capacity,id FROM lessons WHERE start_date >= CURRENT_TIMESTAMP() ORDER BY start_date"
 
@@ -88,6 +59,7 @@ module.exports={
 		return null
 	},
 
+	//ottengo i partecipanti di una lezione
 	get_lessons_partecipants:async(lesson_id)=>{
 		var query="SELECT books.*,lessons.start_date FROM books INNER JOIN lessons ON books.lesson_id=lessons.id WHERE start_date >= CURRENT_TIMESTAMP() AND lesson_id=? ORDER BY start_date"
 	

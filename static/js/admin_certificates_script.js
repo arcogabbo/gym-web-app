@@ -1,4 +1,5 @@
 window.onload=()=>{
+	//aggiunta eventi
 	$('#certificate_btn').on('click',add_certificate)
 
 	$('#subscription_btn').on('click',add_subscription)

@@ -1,7 +1,10 @@
+//OPERAZIONI BASE SUI DATI PER LE AZIONI CHE SVOLGE l'UTENTE
+
 const db=require('./db.js')
 const bcrypt=require('bcrypt')
 
 module.exports={
+	//verifica l'esistenza di un utente accettato
 	read_by_mail:async(mail)=>{
 		var query="SELECT * FROM users WHERE mail=? AND is_accepted=1"
 
@@ -13,21 +16,12 @@ module.exports={
 		return false
 	},
 
+	//verifica l'esistenza di un utente(accettato o meno)
 	exist_by_mail:async(mail)=>{
 		var query="SELECT * FROM users WHERE mail=?"
 
 		var result=await db.query(query,[mail])
 
-		if(result){
-			return result
-		}
-		return false
-	},
-
-	read_info_by_mail:async (mail)=>{
-		var query="SELECT users.*,descriptions.description FROM users LEFT JOIN descriptions ON users.id=descriptions.user_id WHERE users.mail=? AND is_accepted=1"
-		var result=await db.query(query,[mail])
-		
 		if(result){
 			return result
 		}
@@ -44,6 +38,7 @@ module.exports={
 		return false
 	},
 
+	//questa query crea l'utente e lo inserisce nel db con l'hash della password
 	create:async(mail,name,surname,plain_text_password,gender)=>{
 		var query="INSERT INTO users(mail,name,surname,password,join_date,gender) VALUES (?,?,?,?,CURDATE(),?)"
 		//hash della password
@@ -66,6 +61,7 @@ module.exports={
 		}
 	},
 
+	//compara l'hash della passwoord(digest) con la password inserita nella pagina di login
 	validate_user:async(password,digest)=>{
 		var promessa=new Promise((resolve,reject)=>{
 			bcrypt.compare(password,digest,(err,result)=>{
@@ -118,6 +114,7 @@ module.exports={
 		return false
 	},
 
+	//ottengo le lezioni future(oltre 20 minuti dal tempo in cui viene fatta la query)
 	get_lessons:async()=>{
 		var query="SELECT DATE_FORMAT(start_date, '%d/%m') AS date,DATE_FORMAT(start_date, '%H:%i') AS time, capacity-n_books AS free_spots,id FROM lessons WHERE start_date >= DATE_ADD(CURRENT_TIMESTAMP(),INTERVAL 20 MINUTE) ORDER BY start_date"
 
@@ -148,6 +145,7 @@ module.exports={
 		return null
 	},
 
+	//ottengo i record tramite l'id dell'utente e l'id dell'esercizio
 	get_user_prs_by_exercise_id:async(user_id,exercise_id)=>{
 		var query="SELECT exercise_id,value FROM prs WHERE user_id=? AND exercise_id=?"
 
@@ -208,6 +206,7 @@ module.exports={
 		return null
 	},
 
+	//ottengo per un esercizio specificato la classifica dei primi 3 in base al valore nei Kg presente sul db(filtrato per gender)
 	obtain_leaderboard_by_exercise_id:async(exercise_id,gender)=>{
 		var query="SELECT exercises.name AS exercise_name,prs.gender,prs.value,users.name,users.surname, RANK() OVER (ORDER BY value DESC) AS rank FROM exercises INNER JOIN prs ON exercises.id=prs.exercise_id INNER JOIN users ON prs.user_id=users.id WHERE exercise_id=? AND prs.gender=? LIMIT 3"
 

@@ -1,8 +1,12 @@
 window.onload=()=>{
+	//aggiunta eventi
 	$('#save_file_btn').on('click',save_changes)
 
 	$('#save_des_btn').on('click',save_des)
 
+	$('#pr_update_btn').on('click',update_pr)
+
+	//controllo lato client per la grandezza del file
 	$('#image-file').change(()=>{
 		var size=$('#image-file').prop('files')[0].size/1024/1024
 		if(size>2.0){
@@ -11,8 +15,6 @@ window.onload=()=>{
 			M.toast({html:"Il file non deve superare la grandezza di 2MB"})
 		}
 	})
-
-	$('#pr_update_btn').on('click',update_pr)
 
 	//materialize update text inputs
   	M.textareaAutoResize($('#description-area'));

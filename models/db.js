@@ -1,3 +1,5 @@
+//WRAPPER ALLE FUNZIONI BASE DELLA LIBRERIA mysql
+
 const mysql=require('mysql')
 const config=require('../utility/config.js')
 

@@ -58,6 +58,7 @@ module.exports={
 		}
 	},
 
+	//ottengo le lezioni future
 	get_future_lessons:async(req,res)=>{
 		var lessons=await book.get_future_lessons()
 
@@ -68,6 +69,7 @@ module.exports={
 		}
 	},
 
+	//ottengo una singola lezione tramite id passato per parametro
 	get_lesson:async(req,res)=>{
 		var lesson=await book.get_lesson(req.params.lesson_id)
 

@@ -1,4 +1,5 @@
 window.onload=()=>{
+	//aggiunta evento
 	$('.accept-btn').on('click',accept)
 
 	//init sidebar for mobile devices

@@ -2,6 +2,7 @@ const utility=require('../utility/utility.js')
 const user=require('../models/user_model.js')
 
 module.exports={
+	//quando visito la root del client
 	home:(req,res)=>{
 		if(utility.is_auth(req)){
 			res.redirect('/dashboard')
@@ -10,6 +11,7 @@ module.exports={
 		}
 	},
 
+	//route /dashboard
 	dashboard:async(req,res)=>{
 		if(!utility.is_auth(req)){
 			res.redirect('/login.html')
@@ -27,6 +29,7 @@ module.exports={
 		res.redirect('/register.html')
 	},
 
+	//route /dashboard/news
 	news_page:async(req,res)=>{
 		if(!utility.is_auth(req)){
 			res.redirect('/login.html')
@@ -38,6 +41,7 @@ module.exports={
 		}
 	},
 
+	//route /dashbaord/leaderboard
 	leaderboard_page:async(req,res)=>{
 		if(!utility.is_auth(req)){
 			res.redirect('/login.html')
@@ -61,6 +65,7 @@ module.exports={
 		}
 	},
 
+	//route /dashboard/diary
 	diary_page:async(req,res)=>{
 		if(!utility.is_auth(req)){
 			res.redirect('/login.html')
@@ -68,11 +73,12 @@ module.exports={
 			//partecipated_lessons ha le lezioni partecipate dall'utente fino alla settimana scorsa
 			var partecipated_lessons=await user.get_past_lessons_by_user_id(req.user.id)
 			
+			//separo le pagine da inserire dalle pagine da poter aggiornare
 			var to_update=[]
 			var to_insert=[]
 
 			if(partecipated_lessons){
-				//per ogni lezione cui l'utente ha partecipato vedo se ha la entry sul diario
+				//per ogni lezione cui l'utente ha partecipato vedo se esiste la entry sul diario
 				for(var i in partecipated_lessons){
 					var x=await user.get_lesson_diary(partecipated_lessons[i].id,req.user.id)
 					if(x){

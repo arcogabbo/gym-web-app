@@ -6,6 +6,7 @@ const fs_promises=require('fs').promises
 const path=require('path')
 
 module.exports={
+	//funzione utile per prendere i parametri dalla richiesta indipendentemente dal metodo
 	get_parameters:(req)=>{
 		switch(req.method)
 		{
@@ -17,6 +18,7 @@ module.exports={
 		}
 	},
 
+	//metodo veloce per rispondere con un json e con un codice passato come parametro
 	json_response:(res,code,message)=>{
 		res.type('json')
 		res.status(code).json(message)
@@ -49,7 +51,7 @@ module.exports={
 	},
 
 	//is auth a differenza di auth non manda la risposta e non è un middleware
-	//consente quindi di decidere cosa fare nel caso il token sia corretto o inserito
+	//consente quindi di decidere successivamente cosa fare nel caso il token sia corretto o sbagliato
 	is_auth:(req)=>{
 		var token = req.cookies.token;
 		
@@ -76,32 +78,31 @@ module.exports={
 		return false
 	},
 
-	//jwt_sign viene utilizzata nella creazione della sessione
-	//
+	//jwt_sign viene utilizzata nella creazione della sessione e crea il token
 	jwt_sign:(res,obj)=>{
 		jwt.sign(obj,config.secret_key,{expiresIn:"20m"},(err,token)=>{
 			if(err){
 				console.log("errore generazione token jwt: "+err)
 			}
 
-			//mando una risposta di tipo set-cookie
+			//mando una risposta di tipo set-cookie(impone la registrazione del cookie al browser client)
 			res.cookie('token', token, {
 			    expires: new Date(Date.now() + 1200000),
 			    secure: false, // true se usi https
-			    httpOnly: true
+			    httpOnly: true // true per ottenere la segretezza(ovvero cookie non ottenibile lato client con javascript)
 			})
 
 			res.json({token:token})
 		})
 	},
 
+	//funzione di supporto che ritorna il nome e l'estensione dell'immagine profilo di un determinato utente
 	find_pic_by_id:async(id)=>{
-		//console.log(__dirname)
 		var images_path=path.join(__dirname, '../static/images');
 
 		try{
 			var files=await fs_promises.readdir(images_path)
-			//console.log(files)
+
 			for(var index in files){
 				if(files[index].includes(id)){
 					var array=files[index].split('.')
@@ -114,13 +115,13 @@ module.exports={
 		}
 	},
 
+	//funzione di supporto per l'eliminazione di una foto profilo
 	delete_pic_by_path:async(file)=>{
-		//console.log(file)
 		var images_path=path.join(__dirname, '../static/images');
-		//console.log(images_path+"/"+file.name+"."+file.extension)
+
 		try {
 		  	await fs_promises.unlink(images_path+"/"+file.name+"."+file.extension)
-		  	console.log('successfully deleted')
+
 		  	return true
 		} catch (error) {
 			console.error('there was an error:', error.message)
