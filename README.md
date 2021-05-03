@@ -5,8 +5,6 @@ In addition to books athletes can customize their profile and add pages to a cus
 ## Web App setup
 Create a file named config.js like the one below in the utility folder:
 ```js
-//FILE DI CONFIGURAZIONE, ALL'INTERNO TROVIAMO LE IMPOSTAZIONI CHE LA WEB APP USERA'
-
 const config={
 	name: 'YOUR DB NAME',
 	user:'YOUR DB USER',
