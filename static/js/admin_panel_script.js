@@ -22,7 +22,7 @@ function accept(){
 
 		error:(obj,status,err)=>{
 			console.log(err)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }

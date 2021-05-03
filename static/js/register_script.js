@@ -28,7 +28,7 @@ function register(){
 			console.log(obj)
 			if(obj.responseJSON.errors){
 				for(var i in obj.responseJSON.errors)
-					M.toast({html:obj.responseJSON.errors[i].msg})
+					M.toast({text:obj.responseJSON.errors[i].msg})
 			}
 		}
 	})

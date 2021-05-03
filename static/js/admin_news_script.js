@@ -34,11 +34,11 @@ function add_news(){
 			content:$('#content_add_input').val()
 		},
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -58,7 +58,7 @@ function get_news(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -74,11 +74,11 @@ function update_news(){
 			content:$('#content_update_input').val()
 		},
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -90,11 +90,11 @@ function delete_news(){
 		type:'delete',
 		url:'/news/'+id,
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }

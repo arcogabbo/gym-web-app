@@ -37,12 +37,12 @@ function multiple_books(){
 		},
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -58,12 +58,12 @@ function single_book(){
 		},
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -75,12 +75,12 @@ function remove_lesson(){
 		url:'/lesson/'+id,
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(err)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }

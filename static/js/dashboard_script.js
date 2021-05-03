@@ -20,12 +20,12 @@ function book(){
 
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -39,12 +39,12 @@ function free_spot(){
 
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
