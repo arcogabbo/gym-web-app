@@ -23,3 +23,6 @@ module.exports=config
 Now import the schema into your relational database (i personally used MariaDB)
 
 Run the server via `node server.js` or if you want to use nodemon for development run `npm run dev`
+
+## Endpoints
+RESTful API documentation can be found on routes folder.

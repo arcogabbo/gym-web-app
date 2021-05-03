@@ -1152,7 +1152,7 @@ Get all pages of a user
 
 ### Error responses
 
-**Condition**:`Lesson is full or user is already booked on another lesson the same day`
+**Condition**:`Lesson is full or user is already booked on another lesson of the same day`
 
 **Code**:`400 Bad Request`
 
