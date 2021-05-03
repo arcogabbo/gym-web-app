@@ -20,6 +20,8 @@ const config={
 module.exports=config
 ```
 
+Download `materialize.min.css` and `materialize.min.js` from their website and put them respectively on `static/css` and `static/js` folders
+
 Now import the schema into your relational database (i personally used MariaDB)
 
 Run the server via `node server.js` or if you want to use nodemon for development run `npm run dev`
