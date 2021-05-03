@@ -41,7 +41,7 @@ Login with credentials
 
 ### Error responses
 
-**Condition**:`Error with parameters`
+**Condition**:`Wrong credentials or athlete not accepted`
 
 **Code**:`400 Bad Request`
 
@@ -58,12 +58,7 @@ Lesson Resource
 
 **Admin permission**: NO
 
-**Data**:
-```
-	[id]
-```
-
-If you don't provide the id future lessons will be displayed instead.
+Future lessons will be displayed.
 
 **Example**:
 ```bash
@@ -110,7 +105,54 @@ If you don't provide the id future lessons will be displayed instead.
 
 ### Error responses
 
-**Condition**:`When providing id, lesson doesnt exist`
+**Condition**:`Generic server error`
+
+**Code**:`500 Server Error`
+
+-------------------------------------
+
+**URL**: `/lesson/:lesson_id`
+
+**Method**:`GET`
+
+**Logged permission**: YES
+
+**Admin permission**: NO
+
+Single lesson.
+
+**Example**:
+```bash
+	curl -v	\
+	-X GET	\
+	-H "cookie:token=YOUR_TOKEN"	\
+	-d ""	\
+	http://127.0.0.1:8000/lesson/32
+```
+
+### Success responses
+**Code**:`200 OK`
+
+**Output example**
+
+```json
+{
+   "data":
+   [
+      {
+         "id":32,
+         "capacity":8,
+         "start_date":"2021-04-15T15:30:00.000Z",
+         "end_date":"2021-04-15T16:30:00.000Z",
+         "n_books":3
+      }
+   ]
+}
+```
+
+### Error responses
+
+**Condition**:`Lesson not found`
 
 **Code**:`404 Not Found`
 
@@ -130,7 +172,7 @@ If you don't provide the id future lessons will be displayed instead.
 	capacity,
 	initial_timestamp
 ```
-The type could be "single" or "multiple"
+The type must be "single" or "multiple"
 
 **Example**:
 ```bash
@@ -148,7 +190,8 @@ The type could be "single" or "multiple"
 
 ```json
 {
-	"msg": "Lesson added" 
+	"msg": "Lesson added", 
+	"id" : "42"
 }
 ```
 
@@ -164,7 +207,7 @@ The type could be "single" or "multiple"
 
 -------------------------------------
 
-**URL**: `/lesson`
+**URL**: `/lesson/:id`
 
 **Method**:`DELETE`
 
@@ -172,17 +215,13 @@ The type could be "single" or "multiple"
 
 **Admin permission**: YES
 
-**Data**:
-```
-	id
-```
 **Example**:
 ```bash
 	curl -v	\
 	-X DELETE	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=32"	\
-	http://127.0.0.1:8000/lesson
+	-d ""	\
+	http://127.0.0.1:8000/lesson/32
 ```
 
 ### Success responses
@@ -204,9 +243,9 @@ The type could be "single" or "multiple"
 
 -------------------------------------
 
-## /certificate
+## /certificates
 
-**URL**: `/certificate`
+**URL**: `/certificates`
 
 **Method**:`GET`
 
@@ -214,18 +253,13 @@ The type could be "single" or "multiple"
 
 **Admin permission**: YES
 
-**Data**:
-```
-```
-The type could be "single" or "multiple"
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d ""	\
-	http://127.0.0.1:8000/certificate
+	http://127.0.0.1:8000/certificates
 ```
 
 ### Success responses
@@ -249,7 +283,7 @@ The type could be "single" or "multiple"
 ```
 -------------------------------------
 
-**URL**: `/certificate`
+**URL**: `/certificates/:id`
 
 **Method**:`PUT`
 
@@ -259,7 +293,6 @@ The type could be "single" or "multiple"
 
 **Data**:
 ```
-	id,
 	type,
 	date
 ```
@@ -270,8 +303,8 @@ Type must be "certificate" or "subscription"
 	curl -v	\
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=4&type=certificate&date=2021-04-07"	\
-	http://127.0.0.1:8000/certificate
+	-d "type=certificate&date=2021-04-07"	\
+	http://127.0.0.1:8000/certificates/4
 ```
 
 ### Success responses
@@ -291,13 +324,13 @@ Type must be "certificate" or "subscription"
 
 **Code**:`500 Server Error`
 
-**Condition**: `type parameter error`
+**Condition**: `type parameter not inserted`
 
 **Code**:`400 Bad Request`
 
 -------------------------------------
 
-**URL**: `/certificate`
+**URL**: `/certificates/:id`
 
 **Method**:`DELETE`
 
@@ -305,19 +338,13 @@ Type must be "certificate" or "subscription"
 
 **Admin permission**: YES
 
-**Data**:
-```
-	id
-```
-Type must be "certificate" or "subscription"
-
 **Example**:
 ```bash
 	curl -v	\
 	-X DELETE	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=4"	\
-	http://127.0.0.1:8000/certificate
+	-d ""	\
+	http://127.0.0.1:8000/certificates/4
 ```
 
 ### Success responses
@@ -349,17 +376,12 @@ Type must be "certificate" or "subscription"
 
 **Admin permission**: NO
 
-**Data**:
-```
-	[id]
-```
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1"	\
+	-d ""	\
 	http://127.0.0.1:8000/news
 ```
 
@@ -385,6 +407,52 @@ Type must be "certificate" or "subscription"
 **Condition**:`Server error or news not found`
 
 **Code**:`500 Server Error`
+
+-------------------------------------
+
+**URL**: `/news/:id`
+
+**Method**:`GET`
+
+**Logged permission**: YES
+
+**Admin permission**: NO
+
+**Example**:
+```bash
+	curl -v	\
+	-X GET	\
+	-H "cookie:token=YOUR_TOKEN"	\
+	-d ""	\
+	http://127.0.0.1:8000/news/1
+```
+
+### Success responses
+**Code**:`200 OK`
+
+**Output example**
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "test3",
+      "content": "test3_content"
+    }
+  ]
+}
+```
+
+### Error responses
+
+**Condition**:`Server error`
+
+**Code**:`500 Server Error`
+
+**Condition**:`Parameters error`
+
+**Code**:`400 Bad Request`
 
 -------------------------------------
 
@@ -419,7 +487,8 @@ Type must be "certificate" or "subscription"
 
 ```json
 {
-  "msg":"News added"
+  "msg":"News added",
+  "id" : "4"
 }
 ```
 
@@ -431,7 +500,7 @@ Type must be "certificate" or "subscription"
 
 -------------------------------------
 
-**URL**: `/news`
+**URL**: `/news/:id`
 
 **Method**:`PUT`
 
@@ -441,7 +510,6 @@ Type must be "certificate" or "subscription"
 
 **Data**:
 ```
-	id,
 	[expire_date],
 	[title],
 	[content]
@@ -453,8 +521,8 @@ At least 1 of the optional parameters must be provided.
 	curl -v	\
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1&expire_date=2021-07-19"	\
-	http://127.0.0.1:8000/news
+	-d "expire_date=2021-07-19"	\
+	http://127.0.0.1:8000/news/1
 ```
 
 ### Success responses
@@ -476,7 +544,7 @@ At least 1 of the optional parameters must be provided.
 
 -------------------------------------
 
-**URL**: `/news`
+**URL**: `/news/:id`
 
 **Method**:`DELETE`
 
@@ -494,8 +562,8 @@ At least 1 of the optional parameters must be provided.
 	curl -v	\
 	-X DELETE	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1"	\
-	http://127.0.0.1:8000/news
+	-d ""	\
+	http://127.0.0.1:8000/news/1
 ```
 
 ### Success responses
@@ -519,7 +587,7 @@ At least 1 of the optional parameters must be provided.
 
 ## /user
 
-**URL**: `/user`
+**URL**: `/user/:id`
 
 **Method**:`GET`
 
@@ -527,18 +595,13 @@ At least 1 of the optional parameters must be provided.
 
 **Admin permission**: NO
 
-**Data**:
-```
-	id
-```
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1"	\
-	http://127.0.0.1:8000/user
+	-d ""	\
+	http://127.0.0.1:8000/user/1
 ```
 
 ### Success responses
@@ -617,11 +680,16 @@ Gender: 0 for female, 1 for male
 
 ```json
 {
-  "msg":"Registration occurred"
+  "msg":"Registration occurred",
+  "id": "10"
 }
 ```
 
 ### Error responses
+
+**Condition**:`Parameters not validated`
+
+**Code**:`400 Bad Request`
 
 **Condition**:`Mail already used`
 
@@ -633,7 +701,7 @@ Gender: 0 for female, 1 for male
 
 -------------------------------------
 
-**URL**: `/user`
+**URL**: `/user/:id`
 
 **Method**:`PUT`
 
@@ -641,18 +709,13 @@ Gender: 0 for female, 1 for male
 
 **Admin permission**: YES
 
-**Data**:
-```
-	id
-```
-
 **Example**:
 ```bash
 	curl -v	\
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1"	\
-	http://127.0.0.1:8000/user
+	-d ""	\
+	http://127.0.0.1:8000/user/1
 ```
 
 ### Success responses
@@ -673,9 +736,9 @@ Gender: 0 for female, 1 for male
 **Code**:`500 Server Error`
 
 -------------------------------------
-## /user/des
+## /user/:id/des
 
-**URL**: `/user/des`
+**URL**: `/user/:id/des`
 
 **Method**:`GET`
 
@@ -683,18 +746,13 @@ Gender: 0 for female, 1 for male
 
 **Admin permission**: NO
 
-**Data**:
-```
-	id
-```
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1"	\
-	http://127.0.0.1:8000/user/des
+	-d ""	\
+	http://127.0.0.1:8000/user/1/des
 ```
 
 ### Success responses
@@ -721,7 +779,7 @@ Gender: 0 for female, 1 for male
 
 -------------------------------------
 
-**URL**: `/user/des`
+**URL**: `/user/:id/des`
 
 **Method**:`PUT`
 
@@ -740,7 +798,7 @@ Gender: 0 for female, 1 for male
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d "description=hello world"	\
-	http://127.0.0.1:8000/user/des
+	http://127.0.0.1:8000/user/1/des
 ```
 
 ### Success responses
@@ -755,9 +813,9 @@ Gender: 0 for female, 1 for male
 ```
 
 -------------------------------------
-## /user/pic
+## /user/:id/pic
 
-**URL**: `/user/pic`
+**URL**: `/user/:id/pic`
 
 **Method**:`GET`
 
@@ -765,18 +823,13 @@ Gender: 0 for female, 1 for male
 
 **Admin permission**: NO
 
-**Data**:
-```
-	id
-```
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d "id=1"	\
-	http://127.0.0.1:8000/user/pic
+	http://127.0.0.1:8000/user/1/pic
 ```
 
 ### Success responses
@@ -798,7 +851,7 @@ Gender: 0 for female, 1 for male
 
 -------------------------------------
 
-**URL**: `/user/pic`
+**URL**: `/user/:id/pic`
 
 **Method**:`PUT`
 
@@ -817,7 +870,7 @@ Gender: 0 for female, 1 for male
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-F "file=@path/to/your/image"	\
-	http://127.0.0.1:8000/user/pic
+	http://127.0.0.1:8000/user/1/pic
 ```
 
 ### Success responses
@@ -833,14 +886,18 @@ Gender: 0 for female, 1 for male
 
 ### Error responses
 
+**Condition**:`File size exceed max limit`
+
+**Code**:`400 Bad Request`
+
 **Condition**:`Server Error`
 
 **Code**:`500 Server Error`
 
 -------------------------------------
-## /user/pr
+## /user/:id/pr
 
-**URL**: `/user/pr`
+**URL**: `/user/:id/pr`
 
 **Method**:`GET`
 
@@ -850,7 +907,6 @@ Gender: 0 for female, 1 for male
 
 **Data**:
 ```
-	id,
 	exercise_id
 ```
 
@@ -859,8 +915,8 @@ Gender: 0 for female, 1 for male
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
-	-d "id=1&exercise_id=1"	\
-	http://127.0.0.1:8000/user/pr
+	-d ""	\
+	http://127.0.0.1:8000/user/1/pr?exercise_id=1
 ```
 
 ### Success responses
@@ -888,7 +944,7 @@ Gender: 0 for female, 1 for male
 
 -------------------------------------
 
-**URL**: `/user/pr`
+**URL**: `/user/:id/pr`
 
 **Method**:`PUT`
 
@@ -929,9 +985,11 @@ Gender: 0 for female, 1 for male
 **Code**:`500 Server Error`
 
 -------------------------------------
-## /diary
+## /diary/:id
 
-**URL**: `/diary`
+Get all pages of a user
+
+**URL**: `/diary/:id`
 
 **Method**:`GET`
 
@@ -939,19 +997,13 @@ Gender: 0 for female, 1 for male
 
 **Admin permission**: NO
 
-**Data**:
-```
-	[lesson_id]
-```
-If not provided you will get all pages of the diary
-
 **Example**:
 ```bash
 	curl -v	\
 	-X GET	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d ""	\
-	http://127.0.0.1:8000/diary	
+	http://127.0.0.1:8000/diary/1	
 ```
 
 ### Success responses
@@ -966,12 +1018,7 @@ If not provided you will get all pages of the diary
     {
       "start_date": "12/04 - 16:30",
       "content": "aaa",
-      "lesson_id": 28
-    },
-    {
-      "start_date": "07/04 - 16:30",
-      "content": "bbb",
-      "lesson_id": 24
+      "lesson_id": 1
     }
   ]
 }
@@ -985,7 +1032,7 @@ If not provided you will get all pages of the diary
 
 -------------------------------------
 
-**URL**: `/diary`
+**URL**: `/diary/:id`
 
 **Method**:`PUT`
 
@@ -1006,7 +1053,7 @@ If not provided you will get all pages of the diary
 	-X PUT	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d "lesson_id=24&date=2021-04-07&content=bbb"	\
-	http://127.0.0.1:8000/diary	
+	http://127.0.0.1:8000/diary/1	
 ```
 
 ### Success responses
@@ -1028,7 +1075,7 @@ If not provided you will get all pages of the diary
 
 -------------------------------------
 
-**URL**: `/diary`
+**URL**: `/diary/:id`
 
 **Method**:`DELETE`
 
@@ -1047,7 +1094,7 @@ If not provided you will get all pages of the diary
 	-X DELETE	\
 	-H "cookie:token=YOUR_TOKEN"	\
 	-d "lesson_id=24"	\
-	http://127.0.0.1:8000/diary	
+	http://127.0.0.1:8000/diary/1	
 ```
 
 ### Success responses
@@ -1070,3 +1117,85 @@ If not provided you will get all pages of the diary
 **Condition**:`Error with parameters`
 
 **Code**:`400 Bad Request`
+
+-------------------------------------
+
+## /book/:lesson_id
+
+**URL**: `/book/:lesson_id`
+
+**Method**:`POST`
+
+**Logged permission**: YES
+
+**Admin permission**: NO
+
+**Example**:
+```bash
+	curl -v	\
+	-X POST	\
+	-H "cookie:token=YOUR_TOKEN"	\
+	-d ""	\
+	http://127.0.0.1:8000/book/32	
+```
+
+### Success responses
+**Code**:`200 OK`
+
+**Output example**
+
+```json
+{
+  "msg":"Page saved"
+}
+```
+
+### Error responses
+
+**Condition**:`Lesson is full or user is already booked on another lesson the same day`
+
+**Code**:`400 Bad Request`
+
+**Condition**:`Error with the book`
+
+**Code**:`500 Server Error`
+
+-------------------------------------
+
+**URL**: `/book/:lesson_id`
+
+**Method**:`DELETE`
+
+**Logged permission**: YES
+
+**Admin permission**: NO
+
+**Example**:
+```bash
+	curl -v	\
+	-X DELETE	\
+	-H "cookie:token=YOUR_TOKEN"	\
+	-d ""	\
+	http://127.0.0.1:8000/book/32	
+```
+
+### Success responses
+**Code**:`200 OK`
+
+**Output example**
+
+```json
+{
+  "msg":"Book removed"
+}
+```
+
+### Error responses
+
+**Condition**:`Server Error`
+
+**Code**:`500 Server Error`
+
+**Condition**:`Lesson doesn't exist`
+
+**Code**:`404 Not Found`

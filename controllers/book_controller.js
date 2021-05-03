@@ -3,8 +3,6 @@ const book=require('../models/book_model.js')
 
 module.exports={
 	create_book:async(req,res)=>{
-		const params=utility.get_parameters(req)
-
 		//prima controllo se la lezione esiste
 		var l=await book.get_lesson_capacity(req.params.lesson_id)
 		if(!l) return utility.json_response(res,404,{msg:"La lezione non esiste"})
