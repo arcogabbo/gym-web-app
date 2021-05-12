@@ -9,4 +9,5 @@ input{
 
 select{
 	display:block !important;
+	opacity:100 !important;
 }
