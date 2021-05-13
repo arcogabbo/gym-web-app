@@ -24,6 +24,8 @@ Download `materialize.min.css` and `materialize.min.js` from their website and p
 
 Now import the schema into your relational database (i personally used MariaDB)
 
+Place an image named `image.png` inside a `static/images` folder you have to create.
+
 Run the server via `node server.js` or if you want to use nodemon for development run `npm run dev`
 
 ## Endpoints

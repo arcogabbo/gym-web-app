@@ -52,7 +52,7 @@ module.exports={
 		
 		try{
 			var digest=await promessa
-			var result=db.query(query,[mail,name,surname,digest,gender])
+			var result=await db.query(query,[mail,name,surname,digest,gender])
 
 			return result.insertId
 		}catch(er){
