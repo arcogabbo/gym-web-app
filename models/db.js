@@ -37,7 +37,8 @@ module.exports = {
 			return result
 		}catch(e)
 		{
-			console.log("REJECT DAL DB: "+e)
+			if(config.debug)
+				console.log("REJECT DAL DB: "+e)
 		}
 	},
 

@@ -89,6 +89,16 @@ CREATE TABLE `exercises` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `exercises`
+--
+
+LOCK TABLES `exercises` WRITE;
+/*!40000 ALTER TABLE `exercises` DISABLE KEYS */;
+INSERT INTO `exercises` VALUES (1,'Front Squat'),(2,'Overhead Squat'),(3,'Shoulder Press'),(4,'Snatch'),(5,'Clean & Jerk'),(6,'Back Squat'),(7,'Deadlift'),(8,'Pull-up'),(9,'Bar Muscle Up'),(10,'Ring Muscle Up'),(11,'Bench press');
+/*!40000 ALTER TABLE `exercises` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lessons`
 --
 

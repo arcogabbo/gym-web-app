@@ -82,7 +82,8 @@ module.exports={
 	jwt_sign:(res,obj)=>{
 		jwt.sign(obj,config.secret_key,{expiresIn:"20m"},(err,token)=>{
 			if(err){
-				console.log("errore generazione token jwt: "+err)
+				if(config.debug)
+					console.log("errore generazione token jwt: "+err)
 			}
 
 			//mando una risposta di tipo set-cookie(impone la registrazione del cookie al browser client)
@@ -110,7 +111,8 @@ module.exports={
 				}
 			}
 		}catch(e){
-			console.log("ERRORE PROMESSA RICERCA FILE: "+e)
+			if(config.debug)
+				console.log("ERRORE PROMESSA RICERCA FILE: "+e)
 			return null
 		}
 	},

@@ -59,8 +59,6 @@ module.exports={
 				leaderboard_f.push(await user.obtain_leaderboard_by_exercise_id(i,0))
 			}
 
-			//console.log(leaderboard_m)
-			//console.log(leaderboard_f)
 			res.render('dashboard_leaderboard.ejs',{news_count,user:req.user, pic: image?image.name+"."+image.extension:"default.png",leaderboard_m,leaderboard_f})
 		}
 	},

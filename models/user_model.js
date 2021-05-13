@@ -2,6 +2,7 @@
 
 const db=require('./db.js')
 const bcrypt=require('bcrypt')
+const config=require('../utility/config.js')
 
 module.exports={
 	//verifica l'esistenza di un utente accettato
@@ -56,7 +57,8 @@ module.exports={
 
 			return result.insertId
 		}catch(er){
-			console.log(er)
+			if(config.debug)
+				console.log(er)
 			return false
 		}
 	},
@@ -79,7 +81,8 @@ module.exports={
 			var flag=await promessa
 			return flag
 		}catch(e){
-			console.log("errore hash compare: "+e)
+			if(config.debug)
+				console.log("errore hash compare: "+e)
 			return e
 		}
 	},
