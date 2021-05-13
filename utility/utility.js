@@ -80,8 +80,7 @@ module.exports={
 
 	//jwt_sign viene utilizzata nella creazione della sessione e crea il token
 	jwt_sign:(res,obj)=>{
-		// tempo diviso 1000 perchè la libreria lo vuole espresso in secondi quando viene passato un intero
-		jwt.sign(obj,config.secret_key,{expiresIn:config.cookie_time_expire_in_ms/1000},(err,token)=>{
+		jwt.sign(obj,config.secret_key,{expiresIn:`${config.cookie_expire_time_in_ms}`},(err,token)=>{
 			if(err){
 				if(config.debug)
 					console.log("errore generazione token jwt: "+err)
