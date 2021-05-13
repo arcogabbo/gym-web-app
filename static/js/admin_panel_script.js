@@ -17,7 +17,7 @@ function accept(){
 		url:'/user/'+id,
 		success:(res)=>{
 			console.log(res)
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 
 		error:(obj,status,err)=>{

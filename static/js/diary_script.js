@@ -36,7 +36,7 @@ function get_diary_page(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -56,7 +56,7 @@ function fetch_diary(){
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -75,11 +75,11 @@ function add_page(){
 			date
 		},
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -95,11 +95,11 @@ function update_page(){
 			content:$('#content-update-area').val()
 		},
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
@@ -114,11 +114,11 @@ function delete_page(){
 			lesson_id
 		},
 		success:(res)=>{
-			M.toast({html:res.msg})
+			M.toast({text:res.msg})
 		},
 		error:(obj,status,err)=>{
 			console.log(obj)
-			M.toast({html:obj.responseJSON.msg})
+			M.toast({text:obj.responseJSON.msg})
 		}
 	})
 }
