@@ -14,7 +14,8 @@ const config={
 	debug:false,
 	secret_key:'abcdef',
 	path_to_images:"ABSOLUTE PATH TO IMAGE FOLDER",
-	max_file_size_in_bytes:2*1024*1024
+	max_file_size_in_bytes:2*1024*1024,
+	cookie_expire_time_in_ms:1200000 //time for cookie expire (in ms format)
 }
 
 module.exports=config
@@ -24,7 +25,7 @@ Download `materialize.min.css` and `materialize.min.js` from their website and p
 
 Now import the schema into your relational database (i personally used MariaDB)
 
-Place an image named `image.png` inside a `static/images` folder you have to create.
+Place an image named `default.png` inside a `static/images` folder you have to create.
 
 Run the server via `node server.js` or if you want to use nodemon for development run `npm run dev`
 

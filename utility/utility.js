@@ -80,7 +80,8 @@ module.exports={
 
 	//jwt_sign viene utilizzata nella creazione della sessione e crea il token
 	jwt_sign:(res,obj)=>{
-		jwt.sign(obj,config.secret_key,{expiresIn:"20m"},(err,token)=>{
+		// tempo diviso 1000 perchè la libreria lo vuole espresso in secondi quando viene passato un intero
+		jwt.sign(obj,config.secret_key,{expiresIn:config.cookie_time_expire_in_ms/1000},(err,token)=>{
 			if(err){
 				if(config.debug)
 					console.log("errore generazione token jwt: "+err)
@@ -88,7 +89,7 @@ module.exports={
 
 			//mando una risposta di tipo set-cookie(impone la registrazione del cookie al browser client)
 			res.cookie('token', token, {
-			    expires: new Date(Date.now() + 1200000),
+			    expires: new Date(Date.now() + config.cookie_expire_time_in_ms),
 			    secure: false, // true se usi https
 			    httpOnly: true // true per ottenere la segretezza(ovvero cookie non ottenibile lato client con javascript)
 			})
