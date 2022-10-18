@@ -1,5 +1,5 @@
-## CrossFit Web App
-This is a project of mine to help those CrossFit fitness centers who still uses an agenda to take bookings and other things such as certificates and subscriptions.
+## Gym Web App
+This is a project of mine to help those fitness centers who still uses an agenda to take bookings and other things such as certificates and subscriptions.
 In addition to booking, athletes can customize their own profile and add pages to a custom diary based on their activity.
 
 ## Web App setup
